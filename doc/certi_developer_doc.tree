@@ -1,0 +1,89 @@
+/* -*- c -*- 
+// ----------------------------------------------------------------------------
+// CERTI - HLA RunTime Infrastructure
+// Copyright (C) 2002, 2003, 2004  ONERA
+//
+// This file is part of CERTI
+//
+// CERTI-libCERTI is free software ; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation ; either version 2 of
+// the License, or (at your option) any later version.
+//
+// CERTI-libCERTI is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY ; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this program ; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+// USA
+// ----------------------------------------------------------------------------
+*/
+ 
+/**
+ * @mainpage
+ * \section certi_devel CERTI Developer documentation
+ *
+ * This is the CERTI Developer documentation. The developer
+ * documentation is divided into the following part:
+ * <ul>
+ *  <li>\ref intro </li>
+ *  <li>\ref install </li>
+ *  <li>\ref execute </li>
+ *  <li>\ref certi_modules </li>
+ * </ul> 
+ *
+ * \section certi_modules Main CERTI Developer Modules
+ * The main CERTI modules are:
+ * <ul>
+ *   <li> \ref libCERTI </li>
+ *   <li> \ref libRTI </li>
+ *   <li> \ref Billard_Application </li> 
+ * </ul>
+ * There are some RTI-agnostic libraries or applications which
+ * are bundled with the CERTI distribution:
+ * <ul>
+ *   <li> \ref libHLA </li>
+ * </ul>
+ *  
+ */
+
+/**
+ * @defgroup certi CERT Run Time Infrastructure (CERTI)
+ * The CERTI is an Open Source HLA Run Time Infrastructure (RTI)
+ * primarily developed by the Toulouse Center of ONERA
+ * (http://www.onera.fr)  
+ * The CERTI itself consists in a set of libraries and tests applications.
+ * @see HLA_Libraries the (normative) HLA Run Time Libraries
+ * @see HLA_Helpers_Libraries some RTI-agnostic HLA Helper Libraries 
+ * @see CERTI_Libraries the private CERTI library. 
+ * @see CERTI_Applications Some applications bundled with CERTI.
+ * More informations on
+ * <A HREF="http://savannah.nongnu.org/projects/certi">http://savannah.nongnu.org/projects/certi</A>.
+ */
+  
+/**
+ * @defgroup HLA_Libraries Normatives HLA libraries
+ * This group of libraries contains the HLA/IEEE-1516 compliant normative libraries.
+ */
+
+/**
+ * @defgroup CERTI_Libraries The CERTI libraries
+ * The CERTI programming libraries.
+ * @ingroup certi
+ */
+ 
+/**
+ * @defgroup HLA_Helper_Libraries NON-normative HLA helper libraries
+ * This group of libraries contains helper libraries which are non normative
+ * and may be used to ease the development of an HLA federate. 
+ * Those libraries are RTI agnostic, they may be used with other RTI than CERTI.
+ * @ingroup certi
+ */
+ 
+/**
+ * @defgroup CERTI_Applications Applications bundled with CERTI.
+ * @ingroup certi
+ */

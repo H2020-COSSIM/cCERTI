@@ -1,0 +1,190 @@
+CERTI Coding Standard
+=====================
+
+Files
+-----
+
+- C++ source code : .cc
+- C++ header file : .hh
+- no #pragma
+- no tabs (only spaces)
+- files must have a copyright
+- avoid files with more than 1000 lines (better, not mandatory)
+
+Content
+-------
+
+- copyright and license notice with CVS id
+
+Then for .hh files:
+- multiple inclusion check
+- includes
+- NO usings
+- #define's
+- declarations
+
+For the .cc files:
+- main associated .hh file
+- autoheader's config.h
+- includes
+- usings
+- definitions
+
+Note:
+"using namespace std ;" should never be used, because some platforms
+have name conflicts with the STL (e.g std::map vs Sun map struct).
+
+Identifiers
+-----------
+
+- identifiers should be meaningful, and based on english words
+- allowed regexp: [A-Za-z][0-9A-Za-z_]*
+- case: - class           ClassName
+	- type		  TypedefedType
+        - method          methodName()
+        - attribute       attributeName
+        - local variable  variable_name
+        - namespace       namespacename
+        - template type   T
+
+Spaces
+------
+
+Required:
+- after keyword : while (expr) ...
+- after commas : func(param1, param2, param3);
+- around operators : (a && (b || c || d))
+- before * and & (pointer and reference) : char *p ; int &a = b ;
+
+But no spaces:
+- after function/method name                 :   obj.mymethod(p);
+- after [, (, ., ->, before [, ], ), ., ->   :   tab[a + f(obj->ref() + 1)]
+- after * and & (pointer and reference)	     :   char *p ; int &a = b ;
+
+Indentation
+-----------
+
+- 4-space indentation
+- 2-space indentation for case statements
+- no indentation for namespaces
+
+Line wrap
+---------
+
+Always wrap after operator:  if (a && b && c &&
+                                 d && e) ...
+except for << and >> operators :
+       cout << a << b
+	    << c << endl ;
+
+Comments
+--------
+
+- should appear before code, not after 
+- exception for attributes, with the "///<" Doxygen comments
+- comments should be mainly in the class/methods documentation ; too much
+  comments in code often indicates methods that should have been split
+- comments before methods should start with a line of '-' (ending at
+  column 78), and then use Doxygen conventions. eg:
+
+/** Brief comment. Detailed comments.
+    With Doxygen commands such as:
+    \param parameter Description
+    \return
+*/
+void
+MyClass::myMethod(parameters...)
+{
+    ...
+}
+
+Classes
+-------
+
+- private or protected attributes
+- public inheritance
+- order: public declarations, then protected, then private
+
+Class style
+-----------
+
+class ClassName
+{
+public:
+    ClassName();
+    ~ClassName();
+    ...
+
+protected:
+    ...
+
+private:
+    ...
+};
+
+Method style
+------------
+type
+ClassName::methodName(parameters)          // fit on 1 line
+    throw (exceptions)                     // fit on 1 line
+{
+    ...
+}
+
+type
+ClassName::methodName(long_param1,         // doesn't fit on 1 line
+                      long_param2)
+    throw (except1,                          // doesn't fit on 1 line
+           except2)
+{
+    ...
+}
+
+OR (very long parameter types/names) :
+
+type
+ClassName::methodName(
+    long_param1,
+    long_param2)
+    throw (
+        except1,
+        except2)
+{
+    ...
+}
+
+Braces style : K&R
+------------------
+
+if (expr) {
+    statement;
+    statement;
+}
+else if (expr) {
+    statement;
+else {
+    statement;
+}
+
+
+for (init; condition; incr) {
+    ...
+}
+
+
+do {
+    ...
+} while (expr);
+
+
+while (expr) {
+    ...
+}
+
+
+try {
+    ...
+}
+catch (type) {
+    ...
+}

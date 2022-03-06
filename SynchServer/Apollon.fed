@@ -1,0 +1,41 @@
+;; Billard
+
+(Fed
+  (Federation Test)
+  (FedVersion v1.3)
+  (Federate "fed" "Public")
+  (Spaces
+	(Space "Geo"
+		(Dimension X)
+		(Dimension Y)
+	)
+  )
+  (Objects
+    (Class ObjectRoot
+      (Attribute privilegeToDelete reliable timestamp)
+      (Class RTIprivate)
+	(Class Sensor
+		(Attribute PositionX RELIABLE TIMESTAMP)
+		(Attribute PositionY RELIABLE TIMESTAMP)
+		(Attribute PositionZ1 RELIABLE TIMESTAMP)
+	)
+	(Class Actuator
+		(Attribute PositionX RELIABLE TIMESTAMP)
+		(Attribute PositionY RELIABLE TIMESTAMP)
+		(Attribute PositionZ2 RELIABLE TIMESTAMP)
+		(Attribute PtolemyStopExecutionAttr RELIABLE TIMESTAMP) ;; DO NOT DELETE THIS ROW
+	)
+    )
+  )
+  (Interactions
+    (Class InteractionRoot BEST_EFFORT RECEIVE
+      (Class RTIprivate BEST_EFFORT RECEIVE)
+      (Class Bing RELIABLE TIMESTAMP
+	(Sec_Level "Public")
+	(Parameter BoulNum)
+	(Parameter DX)
+	(Parameter DY)
+      )
+    )
+  )
+)

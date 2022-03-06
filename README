@@ -1,0 +1,64 @@
+
+License
+-------
+
+See COPYING file for use/modification/distribution conditions.
+The main license (GPL) can be found in the file "gpl.txt". The license
+for libraries librti and libcerti (LGPL) can be found in the file
+"lesser.txt".
+
+Installation
+------------
+
+The CERTI build system is using CMake 
+(http://www.cmake.org/HTML/RunningCMake.html) such that
+you need to have a working CMake on your system in order to build CERTI.
+
+Depending on the target platform (Windows, Linux, Solaris...) and
+the compiler (GCC, Visual Studio, MinGW, ...) the CERTI CMake build
+system should discover and require the needed dependency.
+
+The fast (and hopefully easy) way to build CERTI is:
+
+1) Get the CERTI tarball or zip from 
+   http://download.savannah.nongnu.org/releases/certi/
+   
+2) Unzip/Untar the archive
+   This will create CERTI-X.Y.Z-Source/ directory
+    
+   on Unix this would be
+   tar zxvf CERTI-X.Y.Z.tar.gz
+
+3) Create a build directory
+   Build_CERTI-X.Y.Z/
+   mkdir Build_CERTI-X.Y.Z
+   
+4) Go to the build directory and launch CMake
+   cd Build_CERTI-X.Y.Z
+   cmake </path/to>/CERTI-X.Y.Z-Source
+   
+   may be
+   cmake ../CERTI-X.Y.Z-Source
+   
+   one may choose the installation prefix with
+   cmake -DCMAKE_INSTALL_PREFIX=/path/to/install ../CERTI-X.Y.Z-Source
+   
+   or launch an interactive CMake UI in order to modify CMAKE_INSTALL_PREFIX.
+   cmake-gui ../CERTI-X.Y.Z-Source 
+   or
+   ccmake ../CERTI-X.Y.Z-Source
+   
+5) Build 
+   make
+   
+6) Install 
+   make install
+   
+The command used for building and installing CERTI depends
+on the platform/compiler combination you chose. The previous
+examples are for Unix-like system with make.
+You may look at
+   http://www.nongnu.org/certi/certi_doc/Install/html/index.html
+   for other build examples.
+   or generic CMake usage:
+   http://www.cmake.org/cmake/help/runningcmake.html

@@ -1,0 +1,39 @@
+;; COSSIM
+
+(Fed
+  (Federation COSSIM)
+  (FedVersion v1.3)
+  (Federate "fed" "Public")
+  (Spaces)
+  
+  (Objects
+    (Class ObjectRoot
+      (Attribute privilegeToDelete reliable timestamp)
+      (Class RTIprivate)
+	(Class Bille
+		(Attribute PositionX RELIABLE TIMESTAMP)
+		(Attribute PositionY RELIABLE TIMESTAMP)
+		(Class Boule
+			(Attribute Color RELIABLE TIMESTAMP)
+		)
+	)
+    )
+  )
+  
+  (Interactions
+    (Class InteractionRoot BEST_EFFORT RECEIVE
+      (Class RTIprivate BEST_EFFORT RECEIVE)
+      (Class NODE_TO_OMNET RELIABLE TIMESTAMP
+	(Sec_Level "Public")
+	(Parameter PacketDataToOmnet)
+	(Parameter PacketLengthToOmnet)
+      )
+      (Class NODE_TO_GEM5 RELIABLE TIMESTAMP
+	(Sec_Level "Public")
+	(Parameter PacketDataToGem5)
+	(Parameter PacketLengthToGem5)
+      )
+    )
+  )
+  
+)

@@ -1,0 +1,56 @@
+TODO list for the CERTI Message generator:
+
+0) Write the documentation (and may be BNF or ANTLR or Lex grammar) for  
+   the CERTI Message specification language
+
+1) Modularize generator such that 
+   each backend generator (C++, Java, Python etc...) may be loaded separately
+   PARTIALLY DONE --> need to automatize the backend loading.
+
+2) Support variant for sequences (vector/list/queue/...)
+
+3) Explain the on-the-wire encoding scheme (i.e. MessageBuffer)
+   Document the CDR-like encoding used by the MessageBuffer
+   Justify the use of fixed-size encoding (not the default of Google proto buf.)   
+
+4) Add a display method for each message (C++ generator)
+   or an helper method which may authorize
+   cout << msg;
+   DONE --> this is the show(ostream& out) method 
+
+5) Parser --> improve syntax error reporting 
+
+6) Enhance C++ generator (or write another one) for which
+   runtime check is done for setting 'required' field before sending
+   (or default value exists)
+
+7) Handle natively defined default values for members
+
+8) Add "merge" qualifier for fields which should be applicable
+   only for "message type" fields. This would "merge-in"
+   the field of the target message as if it were written
+   in the body of the merger message itself.
+   
+9) May be it would be worth implementing a "clone" method.
+   
+10) Add a "bounded" qualifier for "repeated" field such
+    that the buffer size may be statically bounded
+    or may be repeated[10]
+
+11) Run the set of python code through checker in order to prune
+    the source code quality
+    see: http://stackoverflow.com/questions/1318799/tool-to-enforce-python-code-style-standards
+    
+     reindent.py 
+     PyLint
+     epylint
+     epydoc
+     
+    Pylint: http://www.logilab.org/project/pylint
+	PyCheker: http://pychecker.sourceforge.net/
+	PyFlakes: http://divmod.org/trac/wiki/DivmodPyflakes
+
+	PylLint with PyDev (Eclipse)
+	http://pydev.org/manual_adv_pylint.html
+	PyLint with emacs:
+	http://atomized.org/2010/02/pep8-pylint-in-emacs/

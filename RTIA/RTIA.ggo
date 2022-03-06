@@ -1,0 +1,14 @@
+# This is used by gengetopt to generate RTIA command line parser
+# see http://www.gnu.org/software/gengetopt/gengetopt.html#Basic-Usage
+package		"RTIA"
+purpose		"CERTI RunTime Infrastructure Ambassador (RTIA)"
+usage		"rtia [-v] [-p <tcp_port>]"
+description	"Launched by the federate in order to handle RTI<-->Federate communication"
+
+# gengetopt options
+args "-F RTIA_cmdline -G"
+
+# Options
+option "fd"  		f "file descriptor number to be used to communicate with FederateAmbassador" 	int     optional
+option "port"  		p "tcp port to be used to communicate with FederateAmbassador" 	int     optional
+option "verbose"  	v "verbose mode" 			short   optional

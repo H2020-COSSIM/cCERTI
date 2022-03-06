@@ -1,0 +1,11 @@
+Release Notes for CERTI X.Y.Z
+==============================
+
+For now look at the ChangeLog file
+http://cvs.savannah.gnu.org/viewvc/certi/ChangeLog?root=certi&view=log
+FIXME: we should update this
+
+-- 
+Home page    http://www.nongnu.org/certi/
+Project page https://savannah.nongnu.org/projects/certi/
+Known bugs   https://savannah.nongnu.org/bugs/?group=certi
