@@ -1,1 +1,1 @@
-g++ -pthread -o ../../certi-tools/bin/SynchServer tcpserver.cc -std=c++11
+g++ -pthread -o ../build_certi/bin/SynchServer tcpserver.cc -std=c++11
