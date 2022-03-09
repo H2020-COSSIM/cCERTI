@@ -67,7 +67,7 @@ public:
     };
 
 #ifdef HLA13
-    virtual ~testFederate() throw(RTI::FederateInternalError)
+    virtual ~testFederate() 
 #elif IEEE1516_2000
     virtual ~testFederate() throw()
 #elif IEEE1516_2010

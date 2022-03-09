@@ -29,7 +29,7 @@ class BillardStaticDDM : public Billard
 {
 public:
     BillardStaticDDM(std::string);
-    virtual ~BillardStaticDDM() throw (RTI::FederateInternalError) { };
+    virtual ~BillardStaticDDM() { };
 
     virtual void checkRegions();
     virtual void declare();
@@ -51,7 +51,7 @@ class BillardDynamicDDM : public Billard
 {
 public:
     BillardDynamicDDM(std::string);
-    virtual ~BillardDynamicDDM() throw (RTI::FederateInternalError) { };
+    virtual ~BillardDynamicDDM() { };
 
     virtual void checkRegions();
     virtual void declare();

@@ -27,88 +27,61 @@ public:
     virtual int getPrintableLength() const;
     virtual void getPrintableString(char *);
 
-    virtual RTI::FedTime& operator+=(const RTI::FedTime &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::FedTime& operator+=(const RTI::FedTime &) ;
 
-    virtual RTI::FedTime& operator-=(const RTI::FedTime &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::FedTime& operator-=(const RTI::FedTime &) ;
 
-    virtual RTI::Boolean operator<=(const RTI::FedTime &) const
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::Boolean operator<=(const RTI::FedTime &) const ;
 
-    virtual RTI::Boolean operator<(const RTI::FedTime &) const
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::Boolean operator<(const RTI::FedTime &) const ;
 
-    virtual RTI::Boolean operator>=(const RTI::FedTime &) const
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::Boolean operator>=(const RTI::FedTime &) const ;
 
-    virtual RTI::Boolean operator>(const RTI::FedTime &) const
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::Boolean operator>(const RTI::FedTime &) const ;
 
-    virtual RTI::Boolean operator==(const RTI::FedTime &) const
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::Boolean operator==(const RTI::FedTime &) const ;
 
-    virtual RTI::FedTime & operator=(const RTI::FedTime &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::FedTime & operator=(const RTI::FedTime &) ;
 
     virtual RTI::Double getTime() const;
 
-    virtual RTI::Boolean operator==(const RTI::Double &) const
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::Boolean operator==(const RTI::Double &) const ;
 
-    virtual RTI::Boolean operator!=(const RTI::FedTime &) const
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::Boolean operator!=(const RTI::FedTime &) const ;
 
-    virtual RTI::Boolean operator!=(const RTI::Double &) const
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::Boolean operator!=(const RTI::Double &) const ;
 
-    virtual RTI::FedTime &operator=(const RTIfedTime &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::FedTime &operator=(const RTIfedTime &) ;
 
-    virtual RTI::FedTime &operator=(const RTI::Double &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::FedTime &operator=(const RTI::Double &) ;
 
-    virtual RTI::FedTime &operator*=(const RTI::FedTime &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::FedTime &operator*=(const RTI::FedTime &) ;
 
-    virtual RTI::FedTime &operator/=(const RTI::FedTime &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::FedTime &operator/=(const RTI::FedTime &) ;
 
-    virtual RTI::FedTime &operator+=(const RTI::Double &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::FedTime &operator+=(const RTI::Double &) ;
 
-    virtual RTI::FedTime &operator-=(const RTI::Double &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::FedTime &operator-=(const RTI::Double &) ;
 
-    virtual RTI::FedTime &operator*=(const RTI::Double &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::FedTime &operator*=(const RTI::Double &) ;
 
-    virtual RTI::FedTime &operator/=(const RTI::Double &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTI::FedTime &operator/=(const RTI::Double &) ;
 
-    virtual RTIfedTime operator+(const RTI::FedTime &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTIfedTime operator+(const RTI::FedTime &) ;
 
-    virtual RTIfedTime operator+(const RTI::Double &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTIfedTime operator+(const RTI::Double &) ;
 
-    virtual RTIfedTime operator-(const RTI::FedTime &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTIfedTime operator-(const RTI::FedTime &) ;
 
-    virtual RTIfedTime operator-(const RTI::Double &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTIfedTime operator-(const RTI::Double &) ;
 
-    virtual RTIfedTime operator*(const RTI::FedTime &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTIfedTime operator*(const RTI::FedTime &) ;
 
-    virtual RTIfedTime operator*(const RTI::Double &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTIfedTime operator*(const RTI::Double &) ;
 
-    virtual RTIfedTime operator/(const RTI::FedTime &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTIfedTime operator/(const RTI::FedTime &) ;
 
-    virtual RTIfedTime operator/(const RTI::Double &)
-	throw (RTI::InvalidFederationTime);
+    virtual RTIfedTime operator/(const RTI::Double &) ;
 
     friend RTI_STD::ostream FEDTIME_EXPORT &operator<<(RTI_STD::ostream&, const RTI::FedTime &);
 

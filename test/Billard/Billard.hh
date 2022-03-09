@@ -67,7 +67,7 @@ class Billard : public NullFederateAmbassador
 public:
 
     Billard(std::string);
-    virtual ~Billard() throw (RTI::FederateInternalError);
+    virtual ~Billard();
 
     void init(int);
     void init(int, int);

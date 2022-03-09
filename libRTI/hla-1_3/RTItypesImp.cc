@@ -416,29 +416,25 @@ const std::vector<ParameterHandleValuePair_t>& ParameterHandleValuePairSetImp::g
 }
 
 // ----------------------------------------------------------------------------
-RTI::AttributeHandleValuePairSet* RTI::AttributeSetFactory::create(RTI::ULong size) throw(
-    MemoryExhausted, ValueCountExceeded, HandleValuePairMaximumExceeded)
+RTI::AttributeHandleValuePairSet* RTI::AttributeSetFactory::create(RTI::ULong size) 
 {
     return new AttributeHandleValuePairSetImp(size);
 }
 
 // ----------------------------------------------------------------------------
-RTI::AttributeHandleSet* RTI::AttributeHandleSetFactory::create(RTI::ULong size) throw(MemoryExhausted,
-                                                                                       ValueCountExceeded)
+RTI::AttributeHandleSet* RTI::AttributeHandleSetFactory::create(RTI::ULong size) 
 {
     return new AttributeHandleSetImp(size);
 }
 
 // ----------------------------------------------------------------------------
-RTI::FederateHandleSet* RTI::FederateHandleSetFactory::create(RTI::ULong size) throw(MemoryExhausted,
-                                                                                     ValueCountExceeded)
+RTI::FederateHandleSet* RTI::FederateHandleSetFactory::create(RTI::ULong size) 
 {
     return new FederateHandleSetImp(size);
 }
 
 // ----------------------------------------------------------------------------
-RTI::ParameterHandleValuePairSet* RTI::ParameterSetFactory::create(RTI::ULong size) throw(
-    MemoryExhausted, ValueCountExceeded, HandleValuePairMaximumExceeded)
+RTI::ParameterHandleValuePairSet* RTI::ParameterSetFactory::create(RTI::ULong size) 
 {
     return new ParameterHandleValuePairSetImp(size);
 }

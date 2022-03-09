@@ -74,7 +74,7 @@ Billard::Billard(std::string federate_name)
 // ----------------------------------------------------------------------------
 /** Destructor
  */
-Billard::~Billard() throw(RTI::FederateInternalError)
+Billard::~Billard() 
 {
 }
 

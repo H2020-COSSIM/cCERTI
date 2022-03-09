@@ -20,30 +20,21 @@ typedef FederateAmbassador *FederateAmbassadorPtr ;
  * @exception ConcurrentAccessAttempted
  * @exception RTIinternalError
  */
-void createFederationExecution(const char *executionName, const char *FEDid)
-    throw (FederationExecutionAlreadyExists, CouldNotOpenFED, ErrorReadingFED,
-	   ConcurrentAccessAttempted, RTIinternalError);
+void createFederationExecution(const char *executionName, const char *FEDid);
 
 /**
  * Destroys the federation execution.
  * @param[in] executionName the name of the federation
  */
-void destroyFederationExecution(const char *executionName)
-    throw (FederatesCurrentlyJoined, FederationExecutionDoesNotExist,
-	   ConcurrentAccessAttempted, RTIinternalError);
+void destroyFederationExecution(const char *executionName);
 
 /**
  * Joins the federation execution.
  * 
  */
-FederateHandle joinFederationExecution(const char *, const char *, FederateAmbassadorPtr)
-    throw (FederateAlreadyExecutionMember, FederationExecutionDoesNotExist,
-	   CouldNotOpenFED, ErrorReadingFED, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+FederateHandle joinFederationExecution(const char *, const char *, FederateAmbassadorPtr);
 
-void resignFederationExecution(ResignAction)
-    throw (FederateOwnsAttributes, FederateNotExecutionMember, InvalidResignAction,
-	   ConcurrentAccessAttempted, RTIinternalError);
+void resignFederationExecution(ResignAction);
 
 /**
  * Register Federation Synchronization Point.
@@ -52,9 +43,7 @@ void resignFederationExecution(ResignAction)
  * @param[in] label Synchronization point label
  * @param[in] tag User-supplied tag
  */
-void registerFederationSynchronizationPoint(const char *, const char *)
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void registerFederationSynchronizationPoint(const char *, const char *);
 
 /**
  * Register Federation Synchronization Point with set of federates.
@@ -64,45 +53,25 @@ void registerFederationSynchronizationPoint(const char *, const char *)
  * @param[in] tag User-supplied tag
  * @param[in] federates set of federate designators
  */
-void registerFederationSynchronizationPoint(const char *label, const char *tag, const FederateHandleSet &federates)
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress,
-	   RestoreInProgress, RTIinternalError);
+void registerFederationSynchronizationPoint(const char *label, const char *tag, const FederateHandleSet &federates);
 
-void synchronizationPointAchieved(const char *)
-    throw (SynchronizationPointLabelWasNotAnnounced, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void synchronizationPointAchieved(const char *);
 
-void requestFederationSave(const char *, const FedTime &)
-    throw (FederationTimeAlreadyPassed, InvalidFederationTime, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void requestFederationSave(const char *, const FedTime &);
 
-void requestFederationSave(const char *)
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress,
-	   RestoreInProgress, RTIinternalError);
+void requestFederationSave(const char *);
 
-void federateSaveBegun()
-    throw (SaveNotInitiated, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   RestoreInProgress, RTIinternalError);
+void federateSaveBegun();
 
-void federateSaveComplete()
-    throw (SaveNotInitiated, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   RestoreInProgress, RTIinternalError);
+void federateSaveComplete();
 
-void federateSaveNotComplete()
-    throw (SaveNotInitiated, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   RestoreInProgress, RTIinternalError);
+void federateSaveNotComplete();
 
-void requestFederationRestore(const char *)
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress,
-	   RestoreInProgress, RTIinternalError);
+void requestFederationRestore(const char *);
 
-void federateRestoreComplete()
-    throw (RestoreNotRequested, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RTIinternalError);
+void federateRestoreComplete();
 
-void federateRestoreNotComplete()
-    throw (RestoreNotRequested, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RTIinternalError);
+void federateRestoreNotComplete();
 
 /** @} end group HLA13_FederationManagement */
 
@@ -112,39 +81,21 @@ void federateRestoreNotComplete()
  * @{
  */
 
-void publishObjectClass(ObjectClassHandle, const AttributeHandleSet &)
-    throw (ObjectClassNotDefined, AttributeNotDefined, OwnershipAcquisitionPending,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress,
-	   RestoreInProgress, RTIinternalError);
+void publishObjectClass(ObjectClassHandle, const AttributeHandleSet &);
 
-void unpublishObjectClass(ObjectClassHandle)
-    throw (ObjectClassNotDefined, ObjectClassNotPublished, OwnershipAcquisitionPending,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress,
-	   RestoreInProgress, RTIinternalError);
+void unpublishObjectClass(ObjectClassHandle);
 
-void publishInteractionClass(InteractionClassHandle)
-    throw (InteractionClassNotDefined, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void publishInteractionClass(InteractionClassHandle);
 
-void unpublishInteractionClass(InteractionClassHandle)
-    throw (InteractionClassNotDefined, InteractionClassNotPublished, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void unpublishInteractionClass(InteractionClassHandle);
 
-void subscribeObjectClassAttributes(ObjectClassHandle, const AttributeHandleSet &, Boolean = RTI_TRUE)
-    throw (ObjectClassNotDefined, AttributeNotDefined, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void subscribeObjectClassAttributes(ObjectClassHandle, const AttributeHandleSet &, Boolean = RTI_TRUE);
 
-void unsubscribeObjectClass(ObjectClassHandle)
-    throw (ObjectClassNotDefined, ObjectClassNotSubscribed, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void unsubscribeObjectClass(ObjectClassHandle);
 
-void subscribeInteractionClass(InteractionClassHandle, Boolean = RTI_TRUE)
-    throw (InteractionClassNotDefined, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   FederateLoggingServiceCalls, SaveInProgress, RestoreInProgress, RTIinternalError);
+void subscribeInteractionClass(InteractionClassHandle, Boolean = RTI_TRUE);
 
-void unsubscribeInteractionClass(InteractionClassHandle)
-    throw (InteractionClassNotDefined, InteractionClassNotSubscribed, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void unsubscribeInteractionClass(InteractionClassHandle);
 
 /** @} end group HLA13_DeclarationManagement */
 
@@ -155,14 +106,9 @@ void unsubscribeInteractionClass(InteractionClassHandle)
  */
 
 
-ObjectHandle registerObjectInstance(ObjectClassHandle, const char *)
-    throw (ObjectClassNotDefined, ObjectClassNotPublished, ObjectAlreadyRegistered,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress,
-	   RestoreInProgress, RTIinternalError);
+ObjectHandle registerObjectInstance(ObjectClassHandle, const char *);
 
-ObjectHandle registerObjectInstance(ObjectClassHandle)
-    throw (ObjectClassNotDefined, ObjectClassNotPublished, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+ObjectHandle registerObjectInstance(ObjectClassHandle);
 
 /**
  * Update Attribute Values (with time) service (HLA 1.3, §6.4).
@@ -173,10 +119,7 @@ ObjectHandle registerObjectInstance(ObjectClassHandle)
  * @param[in] tag        User supplied tag
  */
 EventRetractionHandle updateAttributeValues(ObjectHandle, const AttributeHandleValuePairSet &,
-					    const FedTime &, const char *)
-    throw (ObjectNotKnown, AttributeNotDefined, AttributeNotOwned, InvalidFederationTime,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress,
-	   RestoreInProgress, RTIinternalError);
+					    const FedTime &, const char *);
 
 /**
  * Update Attribute Values (without time) service (HLA 1.3, §6.4).
@@ -186,9 +129,7 @@ EventRetractionHandle updateAttributeValues(ObjectHandle, const AttributeHandleV
  * @param[in] attributes Set of attribute designator and value pairs
  * @param[in] tag        User supplied tag
  */
-void updateAttributeValues(ObjectHandle object, const AttributeHandleValuePairSet& attributes, const char * tag)
-    throw (ObjectNotKnown, AttributeNotDefined, AttributeNotOwned, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void updateAttributeValues(ObjectHandle object, const AttributeHandleValuePairSet& attributes, const char * tag);
 
 /**
  * Send Interaction with time
@@ -200,15 +141,9 @@ void updateAttributeValues(ObjectHandle object, const AttributeHandleValuePairSe
  * @param tag User-supplied tag
  */
 EventRetractionHandle sendInteraction(InteractionClassHandle interactionClassHandle, const ParameterHandleValuePairSet& parameters,
-				      const FedTime& time, const char * tag)
-    throw (InteractionClassNotDefined, InteractionClassNotPublished, InteractionParameterNotDefined,
-	   InvalidFederationTime, FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress,
-	   RestoreInProgress, RTIinternalError);
+				      const FedTime& time, const char * tag);
 
-void sendInteraction(InteractionClassHandle, const ParameterHandleValuePairSet &, const char *)
-    throw (InteractionClassNotDefined, InteractionClassNotPublished, InteractionParameterNotDefined,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress,
-	   RTIinternalError);
+void sendInteraction(InteractionClassHandle, const ParameterHandleValuePairSet &, const char *);
 
 /**
  * Delete Object with time
@@ -218,9 +153,7 @@ void sendInteraction(InteractionClassHandle, const ParameterHandleValuePairSet &
  * @param theTime Federation time
  * @param theTag user supplied tag
  */
-EventRetractionHandle deleteObjectInstance(ObjectHandle, const FedTime &, const char *)
-    throw (ObjectNotKnown, DeletePrivilegeNotHeld, InvalidFederationTime, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+EventRetractionHandle deleteObjectInstance(ObjectHandle, const FedTime &, const char *);
 
 /**
  * Delete Object without time
@@ -228,31 +161,17 @@ EventRetractionHandle deleteObjectInstance(ObjectHandle, const FedTime &, const 
  * @param theObject Object designator
  * @param theTag user supplied tag
  */
-void deleteObjectInstance(ObjectHandle, const char *)
-    throw (ObjectNotKnown, DeletePrivilegeNotHeld, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void deleteObjectInstance(ObjectHandle, const char *);
 
-void localDeleteObjectInstance(ObjectHandle)
-    throw (ObjectNotKnown, FederateOwnsAttributes, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void localDeleteObjectInstance(ObjectHandle);
 
-void changeAttributeTransportationType(ObjectHandle, const AttributeHandleSet &, TransportationHandle)
-    throw (ObjectNotKnown, AttributeNotDefined, AttributeNotOwned, InvalidTransportationHandle,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress,
-	   RTIinternalError);
+void changeAttributeTransportationType(ObjectHandle, const AttributeHandleSet &, TransportationHandle);
 
-void changeInteractionTransportationType(InteractionClassHandle, TransportationHandle)
-    throw (InteractionClassNotDefined, InteractionClassNotPublished, InvalidTransportationHandle,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress,
-	   RTIinternalError);
+void changeInteractionTransportationType(InteractionClassHandle, TransportationHandle);
 
-void requestObjectAttributeValueUpdate(ObjectHandle, const AttributeHandleSet &)
-    throw (ObjectNotKnown, AttributeNotDefined, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void requestObjectAttributeValueUpdate(ObjectHandle, const AttributeHandleSet &);
 
-void requestClassAttributeValueUpdate(ObjectClassHandle, const AttributeHandleSet &)
-    throw (ObjectClassNotDefined, AttributeNotDefined, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void requestClassAttributeValueUpdate(ObjectClassHandle, const AttributeHandleSet &);
 
 /** @} end group HLA13_ObjectManagement */
 
@@ -262,47 +181,23 @@ void requestClassAttributeValueUpdate(ObjectClassHandle, const AttributeHandleSe
  * @{
  */
 
-void unconditionalAttributeOwnershipDivestiture(ObjectHandle, const AttributeHandleSet &)
-    throw (ObjectNotKnown, AttributeNotDefined, AttributeNotOwned, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void unconditionalAttributeOwnershipDivestiture(ObjectHandle, const AttributeHandleSet &);
 
-void negotiatedAttributeOwnershipDivestiture(ObjectHandle, const AttributeHandleSet &, const char *)
-    throw (ObjectNotKnown, AttributeNotDefined, AttributeNotOwned, AttributeAlreadyBeingDivested,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress,
-	   RTIinternalError);
+void negotiatedAttributeOwnershipDivestiture(ObjectHandle, const AttributeHandleSet &, const char *);
 
-void attributeOwnershipAcquisition(ObjectHandle, const AttributeHandleSet &desiredAttributes, const char *)
-    throw (ObjectNotKnown, ObjectClassNotPublished, AttributeNotDefined, AttributeNotPublished,
-	   FederateOwnsAttributes, FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress,
-	   RestoreInProgress, RTIinternalError);
+void attributeOwnershipAcquisition(ObjectHandle, const AttributeHandleSet &desiredAttributes, const char *);
 
-void attributeOwnershipAcquisitionIfAvailable(ObjectHandle, const AttributeHandleSet &)
-    throw (ObjectNotKnown, ObjectClassNotPublished, AttributeNotDefined, AttributeNotPublished,
-	   FederateOwnsAttributes, AttributeAlreadyBeingAcquired, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void attributeOwnershipAcquisitionIfAvailable(ObjectHandle, const AttributeHandleSet &);
 
-AttributeHandleSet *attributeOwnershipReleaseResponse(ObjectHandle, const AttributeHandleSet &)
-    throw (ObjectNotKnown, AttributeNotDefined, AttributeNotOwned, FederateWasNotAskedToReleaseAttribute,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+AttributeHandleSet *attributeOwnershipReleaseResponse(ObjectHandle, const AttributeHandleSet &);
 
-void cancelNegotiatedAttributeOwnershipDivestiture(ObjectHandle, const AttributeHandleSet &)
-    throw (ObjectNotKnown, AttributeNotDefined, AttributeNotOwned, AttributeDivestitureWasNotRequested,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress,
-	   RTIinternalError);
+void cancelNegotiatedAttributeOwnershipDivestiture(ObjectHandle, const AttributeHandleSet &);
 
-void cancelAttributeOwnershipAcquisition(ObjectHandle, const AttributeHandleSet &)
-    throw (ObjectNotKnown, AttributeNotDefined, AttributeAlreadyOwned,
-	   AttributeAcquisitionWasNotRequested, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void cancelAttributeOwnershipAcquisition(ObjectHandle, const AttributeHandleSet &);
 
-void queryAttributeOwnership(ObjectHandle, AttributeHandle)
-    throw (ObjectNotKnown, AttributeNotDefined, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void queryAttributeOwnership(ObjectHandle, AttributeHandle);
 
-Boolean isAttributeOwnedByFederate(ObjectHandle, AttributeHandle)
-    throw (ObjectNotKnown, AttributeNotDefined, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+Boolean isAttributeOwnedByFederate(ObjectHandle, AttributeHandle);
 
 /** @} end group HLA13_OwnershipManagement */
 
@@ -313,90 +208,43 @@ Boolean isAttributeOwnedByFederate(ObjectHandle, AttributeHandle)
  */
 
 
-void enableTimeRegulation(const FedTime &, const FedTime &)
-    throw (TimeRegulationAlreadyEnabled, EnableTimeRegulationPending, TimeAdvanceAlreadyInProgress,
-	   InvalidFederationTime, InvalidLookahead, ConcurrentAccessAttempted,
-	   FederateNotExecutionMember, SaveInProgress, RestoreInProgress, RTIinternalError);
+void enableTimeRegulation(const FedTime &, const FedTime &);
 
-void disableTimeRegulation()
-    throw (TimeRegulationWasNotEnabled, ConcurrentAccessAttempted, FederateNotExecutionMember,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void disableTimeRegulation();
 
-void enableTimeConstrained()
-    throw (TimeConstrainedAlreadyEnabled, EnableTimeConstrainedPending, TimeAdvanceAlreadyInProgress,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress,
-	   RTIinternalError);
+void enableTimeConstrained();
 
-void disableTimeConstrained()
-    throw (TimeConstrainedWasNotEnabled, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void disableTimeConstrained();
 
-void timeAdvanceRequest(const FedTime &)
-    throw (InvalidFederationTime, FederationTimeAlreadyPassed, TimeAdvanceAlreadyInProgress,
-	   EnableTimeRegulationPending, EnableTimeConstrainedPending, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void timeAdvanceRequest(const FedTime &);
 
-void timeAdvanceRequestAvailable(const FedTime &)
-    throw (InvalidFederationTime, FederationTimeAlreadyPassed, TimeAdvanceAlreadyInProgress,
-	   EnableTimeRegulationPending, EnableTimeConstrainedPending, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void timeAdvanceRequestAvailable(const FedTime &);
 
-void nextEventRequest(const FedTime &)
-    throw (InvalidFederationTime, FederationTimeAlreadyPassed, TimeAdvanceAlreadyInProgress,
-	   EnableTimeRegulationPending, EnableTimeConstrainedPending, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void nextEventRequest(const FedTime &);
 
-void nextEventRequestAvailable(const FedTime &)
-    throw (InvalidFederationTime, FederationTimeAlreadyPassed, TimeAdvanceAlreadyInProgress,
-	   EnableTimeRegulationPending, EnableTimeConstrainedPending, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void nextEventRequestAvailable(const FedTime &);
 
-void flushQueueRequest(const FedTime &)
-    throw (InvalidFederationTime, FederationTimeAlreadyPassed, TimeAdvanceAlreadyInProgress,
-	   EnableTimeRegulationPending, EnableTimeConstrainedPending, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void flushQueueRequest(const FedTime &);
 
-void enableAsynchronousDelivery()
-    throw (AsynchronousDeliveryAlreadyEnabled, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void enableAsynchronousDelivery();
 
-void disableAsynchronousDelivery()
-    throw (AsynchronousDeliveryAlreadyDisabled, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void disableAsynchronousDelivery();
 
-void queryLBTS(FedTime &)
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void queryLBTS(FedTime &);
 
-void queryFederateTime(FedTime &)
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void queryFederateTime(FedTime &);
 
-void queryMinNextEventTime(FedTime &)
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void queryMinNextEventTime(FedTime &);
 
-void modifyLookahead(const FedTime &)
-    throw (InvalidLookahead, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void modifyLookahead(const FedTime &);
 
-void queryLookahead(FedTime &)
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress,
-	   RestoreInProgress, RTIinternalError);
+void queryLookahead(FedTime &);
 
-void retract(EventRetractionHandle theHandle)
-    throw (InvalidRetractionHandle, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void retract(EventRetractionHandle theHandle);
 
-void changeAttributeOrderType(ObjectHandle, const AttributeHandleSet &, OrderingHandle)
-    throw (ObjectNotKnown, AttributeNotDefined, AttributeNotOwned, InvalidOrderingHandle,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void changeAttributeOrderType(ObjectHandle, const AttributeHandleSet &, OrderingHandle);
 
-void changeInteractionOrderType(InteractionClassHandle, OrderingHandle)
-    throw (InteractionClassNotDefined, InteractionClassNotPublished, InvalidOrderingHandle,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void changeInteractionOrderType(InteractionClassHandle, OrderingHandle);
 
 /** @} end group HLA13_TimeManagement */
 
@@ -407,73 +255,37 @@ void changeInteractionOrderType(InteractionClassHandle, OrderingHandle)
  */
 
 
-Region *createRegion(SpaceHandle, ULong)
-    throw (SpaceNotDefined, InvalidExtents, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+Region *createRegion(SpaceHandle, ULong);
 
-void notifyAboutRegionModification(Region &theRegion)
-    throw (RegionNotKnown, InvalidExtents, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void notifyAboutRegionModification(Region &theRegion);
 
-void deleteRegion(Region *)
-    throw (RegionNotKnown, RegionInUse, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void deleteRegion(Region *);
 
 RTI::ObjectHandle registerObjectInstanceWithRegion(ObjectClassHandle, const char *, AttributeHandle [],
-					      Region *theRegions[], ULong)
-    throw (ObjectClassNotDefined, ObjectClassNotPublished, AttributeNotDefined, AttributeNotPublished,
-	   RegionNotKnown, InvalidRegionContext, ObjectAlreadyRegistered, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+					      Region *theRegions[], ULong);
 
-RTI::ObjectHandle registerObjectInstanceWithRegion(ObjectClassHandle, AttributeHandle [], Region *regions[], ULong)
-    throw (ObjectClassNotDefined, ObjectClassNotPublished, AttributeNotDefined, AttributeNotPublished,
-	   RegionNotKnown, InvalidRegionContext, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+RTI::ObjectHandle registerObjectInstanceWithRegion(ObjectClassHandle, AttributeHandle [], Region *regions[], ULong);
 
-void associateRegionForUpdates(Region &, ObjectHandle, const AttributeHandleSet &)
-    throw (ObjectNotKnown, AttributeNotDefined, InvalidRegionContext, RegionNotKnown,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress,
-	   RestoreInProgress, RTIinternalError);
+void associateRegionForUpdates(Region &, ObjectHandle, const AttributeHandleSet &);
 
-void unassociateRegionForUpdates(Region &, ObjectHandle)
-    throw (ObjectNotKnown, InvalidRegionContext, RegionNotKnown, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void unassociateRegionForUpdates(Region &, ObjectHandle);
 
 void subscribeObjectClassAttributesWithRegion(ObjectClassHandle, Region &, const AttributeHandleSet &,
-					      Boolean = RTI_TRUE)
-    throw (ObjectClassNotDefined, AttributeNotDefined, RegionNotKnown, InvalidRegionContext,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+					      Boolean = RTI_TRUE);
 
-void unsubscribeObjectClassWithRegion(ObjectClassHandle, Region &)
-    throw (ObjectClassNotDefined, RegionNotKnown, ObjectClassNotSubscribed, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void unsubscribeObjectClassWithRegion(ObjectClassHandle, Region &);
 
-void subscribeInteractionClassWithRegion(InteractionClassHandle, Region &, Boolean = RTI_TRUE)
-    throw (InteractionClassNotDefined, RegionNotKnown, InvalidRegionContext, FederateLoggingServiceCalls,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void subscribeInteractionClassWithRegion(InteractionClassHandle, Region &, Boolean = RTI_TRUE);
 
-void unsubscribeInteractionClassWithRegion(InteractionClassHandle, Region &)
-    throw (InteractionClassNotDefined, InteractionClassNotSubscribed, RegionNotKnown,
-	   FederateNotExecutionMember, ConcurrentAccessAttempted, SaveInProgress,
-	   RestoreInProgress, RTIinternalError);
+void unsubscribeInteractionClassWithRegion(InteractionClassHandle, Region &);
 
 EventRetractionHandle sendInteractionWithRegion(InteractionClassHandle, const ParameterHandleValuePairSet &,
-						const FedTime &, const char *, const Region &)
-    throw (InteractionClassNotDefined, InteractionClassNotPublished, InteractionParameterNotDefined,
-	   InvalidFederationTime, RegionNotKnown, InvalidRegionContext, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+						const FedTime &, const char *, const Region &);
 
 void sendInteractionWithRegion(InteractionClassHandle, const ParameterHandleValuePairSet &,
-			       const char *, const Region &)
-    throw (InteractionClassNotDefined, InteractionClassNotPublished, InteractionParameterNotDefined,
-	   RegionNotKnown, InvalidRegionContext, FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+			       const char *, const Region &);
 
-void requestClassAttributeValueUpdateWithRegion(ObjectClassHandle, const AttributeHandleSet &, const Region &)
-    throw (ObjectClassNotDefined, AttributeNotDefined, RegionNotKnown, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, SaveInProgress, RestoreInProgress, RTIinternalError);
+void requestClassAttributeValueUpdateWithRegion(ObjectClassHandle, const AttributeHandleSet &, const Region &);
 
 /** @} end group HLA13_DataDistributionManagement */
 
@@ -483,75 +295,47 @@ void requestClassAttributeValueUpdateWithRegion(ObjectClassHandle, const Attribu
  * @{
  */
 
-ObjectClassHandle getObjectClassHandle(const char *)
-    throw (NameNotFound, FederateNotExecutionMember, ConcurrentAccessAttempted, RTIinternalError);
+ObjectClassHandle getObjectClassHandle(const char *);
 
-char *getObjectClassName(ObjectClassHandle)
-    throw (ObjectClassNotDefined, FederateNotExecutionMember, ConcurrentAccessAttempted, RTIinternalError);
+char *getObjectClassName(ObjectClassHandle);
 
-AttributeHandle getAttributeHandle(const char *, ObjectClassHandle)
-    throw (ObjectClassNotDefined, NameNotFound, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, RTIinternalError);
+AttributeHandle getAttributeHandle(const char *, ObjectClassHandle);
 
-char *getAttributeName(AttributeHandle, ObjectClassHandle)
-    throw (ObjectClassNotDefined, AttributeNotDefined, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, RTIinternalError);
+char *getAttributeName(AttributeHandle, ObjectClassHandle);
 
-InteractionClassHandle getInteractionClassHandle(const char *)
-    throw (NameNotFound, FederateNotExecutionMember, ConcurrentAccessAttempted, RTIinternalError);
+InteractionClassHandle getInteractionClassHandle(const char *);
 
-char *getInteractionClassName(InteractionClassHandle)
-    throw (InteractionClassNotDefined, FederateNotExecutionMember, ConcurrentAccessAttempted, RTIinternalError);
+char *getInteractionClassName(InteractionClassHandle);
 
-ParameterHandle getParameterHandle(const char *, InteractionClassHandle)
-    throw (InteractionClassNotDefined, NameNotFound, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, RTIinternalError);
+ParameterHandle getParameterHandle(const char *, InteractionClassHandle);
 
-char *getParameterName(ParameterHandle, InteractionClassHandle)
-    throw (InteractionClassNotDefined, InteractionParameterNotDefined, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, RTIinternalError);
+char *getParameterName(ParameterHandle, InteractionClassHandle);
 
-ObjectHandle getObjectInstanceHandle(const char *)
-    throw (ObjectNotKnown, FederateNotExecutionMember, ConcurrentAccessAttempted, RTIinternalError);
+ObjectHandle getObjectInstanceHandle(const char *);
 
-char *getObjectInstanceName(ObjectHandle)
-    throw (ObjectNotKnown, FederateNotExecutionMember, ConcurrentAccessAttempted, RTIinternalError);
+char *getObjectInstanceName(ObjectHandle);
 
-SpaceHandle getRoutingSpaceHandle(const char *)
-    throw (NameNotFound, FederateNotExecutionMember, ConcurrentAccessAttempted, RTIinternalError);
+SpaceHandle getRoutingSpaceHandle(const char *);
 
-char *getRoutingSpaceName(SpaceHandle)
-    throw (SpaceNotDefined, FederateNotExecutionMember, ConcurrentAccessAttempted, RTIinternalError);
+char *getRoutingSpaceName(SpaceHandle);
 
-RTI::DimensionHandle getDimensionHandle(const char *, SpaceHandle)
-    throw (SpaceNotDefined, NameNotFound, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, RTIinternalError);
+RTI::DimensionHandle getDimensionHandle(const char *, SpaceHandle);
 
-char *getDimensionName(DimensionHandle, SpaceHandle)
-    throw (SpaceNotDefined, DimensionNotDefined, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, RTIinternalError);
+char *getDimensionName(DimensionHandle, SpaceHandle);
 
-RTI::SpaceHandle getAttributeRoutingSpaceHandle(AttributeHandle, ObjectClassHandle)
-    throw (ObjectClassNotDefined, AttributeNotDefined, FederateNotExecutionMember,
-	   ConcurrentAccessAttempted, RTIinternalError);
+RTI::SpaceHandle getAttributeRoutingSpaceHandle(AttributeHandle, ObjectClassHandle);
 
-RTI::ObjectClassHandle getObjectClass(ObjectHandle)
-    throw (ObjectNotKnown, FederateNotExecutionMember, ConcurrentAccessAttempted, RTIinternalError);
+RTI::ObjectClassHandle getObjectClass(ObjectHandle);
 
-RTI::SpaceHandle getInteractionRoutingSpaceHandle(InteractionClassHandle)
-    throw (InteractionClassNotDefined, FederateNotExecutionMember, ConcurrentAccessAttempted, RTIinternalError);
+RTI::SpaceHandle getInteractionRoutingSpaceHandle(InteractionClassHandle);
 
-TransportationHandle getTransportationHandle(const char *)
-    throw (NameNotFound, FederateNotExecutionMember, ConcurrentAccessAttempted, RTIinternalError);
+TransportationHandle getTransportationHandle(const char *);
 
-char *getTransportationName(TransportationHandle)
-    throw (InvalidTransportationHandle, FederateNotExecutionMember, ConcurrentAccessAttempted, RTIinternalError);
+char *getTransportationName(TransportationHandle);
 
-OrderingHandle getOrderingHandle(const char *)
-    throw (NameNotFound, FederateNotExecutionMember, ConcurrentAccessAttempted, RTIinternalError);
+OrderingHandle getOrderingHandle(const char *);
 
-char *getOrderingName(OrderingHandle)
-    throw (InvalidOrderingHandle, FederateNotExecutionMember, ConcurrentAccessAttempted, RTIinternalError);
+char *getOrderingName(OrderingHandle);
 
 /**
  * Sets the ClassRelevanceAdvisory (CRA) switch to true. The switch
@@ -571,9 +355,7 @@ char *getOrderingName(OrderingHandle)
  * stopRegistrationForObjectClass respectively are not invoked.
  * @see disableClassRelevanceAdvisorySwitch()
  */
-void enableClassRelevanceAdvisorySwitch()
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void enableClassRelevanceAdvisorySwitch();
 
 /**
  * Sets the ClassRelevanceAdvisory (CRA) switch to false. The switch
@@ -593,9 +375,7 @@ void enableClassRelevanceAdvisorySwitch()
  * services startRegistrationForObjectClass and
  * stopRegistrationForObjectClass respectively are not invoked.
  */
-void disableClassRelevanceAdvisorySwitch()
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void disableClassRelevanceAdvisorySwitch();
 
 /**
  * Sets the AttributeRelevanceAdvisory (ARA) switch to true. The switch
@@ -616,9 +396,7 @@ void disableClassRelevanceAdvisorySwitch()
  * turnUpdatesOffForObjectInstance respectively are not invoked.
  * @see disableAttributeRelevanceAdvisorySwitch()
  */
-void enableAttributeRelevanceAdvisorySwitch()
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void enableAttributeRelevanceAdvisorySwitch();
 
 /**
  * Sets the AttributeRelevanceAdvisory (ARA) switch to false. The switch
@@ -639,9 +417,7 @@ void enableAttributeRelevanceAdvisorySwitch()
  * services turnUpdatesOnForObjectInstance and
  * turnUpdatesOffForObjectInstance respectively are not invoked.
  */
-void disableAttributeRelevanceAdvisorySwitch()
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void disableAttributeRelevanceAdvisorySwitch();
 
 /**
  * Sets the AttributeScopeAdvisory (ASA) switch to true. The switch state
@@ -661,9 +437,7 @@ void disableAttributeRelevanceAdvisorySwitch()
  * not invoked.
  * @see disableAttributeScopeAdvisorySwitch()
  */
-void enableAttributeScopeAdvisorySwitch()
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void enableAttributeScopeAdvisorySwitch();
 
 /**
  * Sets the AttributeScopeAdvisory (ASA) switch to false. The switch state
@@ -683,9 +457,7 @@ void enableAttributeScopeAdvisorySwitch()
  * services attributesInScope and attributesOutScope respectively are
  * not invoked.
  */
-void disableAttributeScopeAdvisorySwitch()
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void disableAttributeScopeAdvisorySwitch();
 
 /**
  * Sets the InteractionRelevanceAdvisory (IRA) switch to true. The switch
@@ -705,9 +477,7 @@ void disableAttributeScopeAdvisorySwitch()
  * not invoked.
  * @see disableInteractionRelevanceAdvisorySwitch()
  */
-void enableInteractionRelevanceAdvisorySwitch()
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void enableInteractionRelevanceAdvisorySwitch();
 
 /**
  * Sets the InteractionRelevanceAdvisory (IRA) switch to false. The switch
@@ -727,9 +497,7 @@ void enableInteractionRelevanceAdvisorySwitch()
  * services turnInteractionsOn and turnInteractionsOff respectively are
  * not invoked.
  */
-void disableInteractionRelevanceAdvisorySwitch()
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted,
-	   SaveInProgress, RestoreInProgress, RTIinternalError);
+void disableInteractionRelevanceAdvisorySwitch();
 
 /**
  * Evoke callback (HLA1.3).
@@ -740,8 +508,7 @@ void disableInteractionRelevanceAdvisorySwitch()
  * may evoke 0 or at most 1 callback.
  * @return Always returns false.
  */
-Boolean tick()
-    throw (SpecifiedSaveLabelDoesNotExist, ConcurrentAccessAttempted, RTIinternalError);
+Boolean tick();
 
 /**
  * Blocking callback evocation (CERTI extension).
@@ -750,8 +517,7 @@ Boolean tick()
  * @return true if additional callbacks pending, false otherwise
  * @warning This is a non-standard extension of the HLA 1.3/IEEE-1516 API.
  */
-Boolean tick2()
-    throw (SpecifiedSaveLabelDoesNotExist, ConcurrentAccessAttempted, RTIinternalError);
+Boolean tick2();
 
 /**
  * Generic callback evocation (CERTI extension).
@@ -765,8 +531,7 @@ Boolean tick2()
  * @return true if additional callbacks pending, false otherwise
  * @warning This is a non-standard extension of the HLA 1.3/IEEE-1516 API.
  */
-Boolean __tick_kernel(Boolean multiple, TickTime minimum, TickTime maximum)
-    throw (SpecifiedSaveLabelDoesNotExist, ConcurrentAccessAttempted, RTIinternalError);
+Boolean __tick_kernel(Boolean multiple, TickTime minimum, TickTime maximum);
 
 /**
  * Evoke multiple callbacks (HLA1.3).
@@ -777,8 +542,7 @@ Boolean __tick_kernel(Boolean multiple, TickTime minimum, TickTime maximum)
  * @param[in] maximum the maximum amount of time spent in the tick call.
  * @return true if additional callbacks pending, false otherwise
  */
-Boolean tick(TickTime minimum, TickTime maximum)
-    throw (SpecifiedSaveLabelDoesNotExist, ConcurrentAccessAttempted, RTIinternalError);
+Boolean tick(TickTime minimum, TickTime maximum);
 
 /** @} end group HLA13_SupportService */
 
@@ -796,28 +560,22 @@ Boolean tick(TickTime minimum, TickTime maximum)
  *           - SCHED_FIFO or SCHED_RR on Linux system
  * @warning This is a non-standard extension of the HLA 1.3 API.
  */
-void setPriorityforRTIAProcess(int priority, unsigned int schedPolicy)
-    throw(RTIinternalError) ;
+void setPriorityforRTIAProcess(int priority, unsigned int schedPolicy) ;
 
 /** 
  * Set Processor Mask affinity for RTIA Process (CERTI Real-time extension).
  * @param mask the mask to be applied for RTIA process (depend on available number of processors)
  * @warning This is a non-standard extension of the HLA 1.3 API.
  */
-void setAffinityforRTIAProcess(cpu_set_t mask)
-    throw(RTIinternalError) ;
+void setAffinityforRTIAProcess(cpu_set_t mask) ;
 
 /** @} end group CERTI_RealtimeManagement */
 #endif
 
-RTIambassador()
-    throw (MemoryExhausted, RTIinternalError);
+RTIambassador();
 
-~RTIambassador()
-    throw (RTIinternalError);
+~RTIambassador();
 
-RegionToken getRegionToken(Region *)
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted, RegionNotKnown, RTIinternalError);
+RegionToken getRegionToken(Region *);
 
-Region *getRegion(RegionToken)
-    throw (FederateNotExecutionMember, ConcurrentAccessAttempted, RegionNotKnown, RTIinternalError);
+Region *getRegion(RegionToken);

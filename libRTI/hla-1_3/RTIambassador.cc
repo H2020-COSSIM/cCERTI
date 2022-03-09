@@ -155,7 +155,7 @@ void assignPHVPSToRequest(const std::vector<std::pair<RTI::ParameterHandle, Para
   This process connects to rtia after one second delay (UNIX socket).
  */
 
-RTI::RTIambassador::RTIambassador() throw(RTI::MemoryExhausted, RTI::RTIinternalError)
+RTI::RTIambassador::RTIambassador()
 {
     Debug(G, pdGendoc) << "enter RTIambassador::RTIambassador" << std::endl;
     PrettyDebug::setFederateName("LibRTI::UnjoinedFederate");
@@ -340,7 +340,7 @@ RTI::RTIambassador::RTIambassador() throw(RTI::MemoryExhausted, RTI::RTIinternal
 //! Closes processes.
 /*! When destructor is called, kill rtia process.
  */
-RTI::RTIambassador::~RTIambassador() throw(RTI::RTIinternalError)
+RTI::RTIambassador::~RTIambassador()
 {
     M_Close_Connexion req, rep;
 
@@ -354,9 +354,7 @@ RTI::RTIambassador::~RTIambassador() throw(RTI::RTIinternalError)
 }
 
 // ----------------------------------------------------------------------------
-RTI::Boolean RTI::RTIambassador::tick() throw(RTI::SpecifiedSaveLabelDoesNotExist,
-                                              RTI::ConcurrentAccessAttempted,
-                                              RTI::RTIinternalError)
+RTI::Boolean RTI::RTIambassador::tick() 
 {
 #if defined(LEGACY_LIBRTI)
     __tick_kernel(RTI_FALSE, 0.0, 0.0);
@@ -370,17 +368,14 @@ RTI::Boolean RTI::RTIambassador::tick() throw(RTI::SpecifiedSaveLabelDoesNotExis
 }
 
 // ----------------------------------------------------------------------------
-RTI::Boolean RTI::RTIambassador::tick2() throw(RTI::SpecifiedSaveLabelDoesNotExist,
-                                               RTI::ConcurrentAccessAttempted,
-                                               RTI::RTIinternalError)
+RTI::Boolean RTI::RTIambassador::tick2() 
 {
     __tick_kernel(RTI_FALSE, std::numeric_limits<double>::infinity(), 0.0);
     return RTI_FALSE;
 }
 
 // ----------------------------------------------------------------------------
-RTI::Boolean RTI::RTIambassador::__tick_kernel(RTI::Boolean multiple, TickTime minimum, TickTime maximum) throw(
-    RTI::SpecifiedSaveLabelDoesNotExist, RTI::ConcurrentAccessAttempted, RTI::RTIinternalError)
+RTI::Boolean RTI::RTIambassador::__tick_kernel(RTI::Boolean multiple, TickTime minimum, TickTime maximum)
 {
     M_Tick_Request vers_RTI;
     std::unique_ptr<Message> vers_Fed;
@@ -450,9 +445,7 @@ RTI::Boolean RTI::RTIambassador::__tick_kernel(RTI::Boolean multiple, TickTime m
 }
 
 // ----------------------------------------------------------------------------
-RTI::Boolean RTI::RTIambassador::tick(TickTime minimum, TickTime maximum) throw(RTI::SpecifiedSaveLabelDoesNotExist,
-                                                                                RTI::ConcurrentAccessAttempted,
-                                                                                RTI::RTIinternalError)
+RTI::Boolean RTI::RTIambassador::tick(TickTime minimum, TickTime maximum) 
 {
     return __tick_kernel(RTI_TRUE, minimum, maximum);
 }
@@ -496,20 +489,14 @@ void RTI::RTIambassador::setAffinityforRTIAProcess(cpu_set_t mask) throw(RTIinte
 
 // ----------------------------------------------------------------------------
 //! Get Region Token.
-RTI::RegionToken RTI::RTIambassador::getRegionToken(Region* region) throw(RTI::FederateNotExecutionMember,
-                                                                          RTI::ConcurrentAccessAttempted,
-                                                                          RTI::RegionNotKnown,
-                                                                          RTI::RTIinternalError)
+RTI::RegionToken RTI::RTIambassador::getRegionToken(Region* region) 
 {
     return get_handle(*region);
 }
 
 // ----------------------------------------------------------------------------
 //! Get Region.
-RTI::Region* RTI::RTIambassador::getRegion(RegionToken) throw(RTI::FederateNotExecutionMember,
-                                                              RTI::ConcurrentAccessAttempted,
-                                                              RTI::RegionNotKnown,
-                                                              RTI::RTIinternalError)
+RTI::Region* RTI::RTIambassador::getRegion(RegionToken) 
 {
     throw RTI::RTIinternalError("unimplemented service getRegion");
 }
@@ -526,11 +513,7 @@ RTI::Region* RTI::RTIambassador::getRegion(RegionToken) throw(RTI::FederateNotEx
 void
     //RTI::
     RTI::RTIambassador::createFederationExecution(const char* executionName,
-                                                  const char* FED) throw(RTI::RTIinternalError,
-                                                                         RTI::ConcurrentAccessAttempted,
-                                                                         RTI::ErrorReadingFED,
-                                                                         RTI::CouldNotOpenFED,
-                                                                         RTI::FederationExecutionAlreadyExists)
+                                                  const char* FED)
 {
     Debug(G, pdGendoc) << "enter RTIambassador::createFederationExecution" << std::endl;
 
@@ -558,11 +541,7 @@ void
     execution from the RTI set of federation executions.
     \param executionName execution name of the federation to be destroyed
  */
-void RTI::RTIambassador::destroyFederationExecution(const char* executionName) throw(
-    RTI::RTIinternalError,
-    RTI::ConcurrentAccessAttempted,
-    RTI::FederationExecutionDoesNotExist,
-    RTI::FederatesCurrentlyJoined)
+void RTI::RTIambassador::destroyFederationExecution(const char* executionName) 
 {
     M_Destroy_Federation_Execution req, rep;
 
@@ -582,14 +561,7 @@ void RTI::RTIambassador::destroyFederationExecution(const char* executionName) t
 RTI::FederateHandle
 RTI::RTIambassador::joinFederationExecution(const char* yourName,
                                             const char* executionName,
-                                            FederateAmbassadorPtr fedamb) throw(RTI::RTIinternalError,
-                                                                                RTI::RestoreInProgress,
-                                                                                RTI::SaveInProgress,
-                                                                                RTI::ConcurrentAccessAttempted,
-                                                                                RTI::ErrorReadingFED,
-                                                                                RTI::CouldNotOpenFED,
-                                                                                RTI::FederationExecutionDoesNotExist,
-                                                                                RTI::FederateAlreadyExecutionMember)
+                                            FederateAmbassadorPtr fedamb) 
 {
     M_Join_Federation_Execution_V4 req, rep;
 
@@ -621,11 +593,7 @@ RTI::RTIambassador::joinFederationExecution(const char* yourName,
 
 // ----------------------------------------------------------------------------
 //! Resign Federation Execution.
-void RTI::RTIambassador::resignFederationExecution(ResignAction theAction) throw(RTI::FederateOwnsAttributes,
-                                                                                 RTI::FederateNotExecutionMember,
-                                                                                 RTI::InvalidResignAction,
-                                                                                 RTI::ConcurrentAccessAttempted,
-                                                                                 RTI::RTIinternalError)
+void RTI::RTIambassador::resignFederationExecution(ResignAction theAction) 
 {
     M_Resign_Federation_Execution req, rep;
 
@@ -639,12 +607,7 @@ void RTI::RTIambassador::resignFederationExecution(ResignAction theAction) throw
     Debug(G, pdGendoc) << "exit RTIambassador::resignFederationExecution" << std::endl;
 }
 
-void RTI::RTIambassador::registerFederationSynchronizationPoint(const char* label, const char* the_tag) throw(
-    RTI::FederateNotExecutionMember,
-    RTI::ConcurrentAccessAttempted,
-    RTI::SaveInProgress,
-    RTI::RestoreInProgress,
-    RTI::RTIinternalError)
+void RTI::RTIambassador::registerFederationSynchronizationPoint(const char* label, const char* the_tag) 
 {
     M_Register_Federation_Synchronization_Point req, rep;
 
@@ -665,11 +628,7 @@ void RTI::RTIambassador::registerFederationSynchronizationPoint(const char* labe
 } /* end of RTI::RTIambassador::registerFederationSynchronizationPoint */
 
 void RTI::RTIambassador::registerFederationSynchronizationPoint(
-    const char* label, const char* theTag, const FederateHandleSet& set_of_fed) throw(RTI::RTIinternalError,
-                                                                                      RTI::RestoreInProgress,
-                                                                                      RTI::SaveInProgress,
-                                                                                      RTI::ConcurrentAccessAttempted,
-                                                                                      RTI::FederateNotExecutionMember)
+    const char* label, const char* theTag, const FederateHandleSet& set_of_fed) 
 {
     M_Register_Federation_Synchronization_Point req, rep;
 
@@ -698,13 +657,7 @@ void RTI::RTIambassador::registerFederationSynchronizationPoint(
 
 // ----------------------------------------------------------------------------
 //! Synchronization Point Achieved
-void RTI::RTIambassador::synchronizationPointAchieved(const char* label) throw(
-    RTI::SynchronizationPointLabelWasNotAnnounced,
-    RTI::FederateNotExecutionMember,
-    RTI::ConcurrentAccessAttempted,
-    RTI::SaveInProgress,
-    RTI::RestoreInProgress,
-    RTI::RTIinternalError)
+void RTI::RTIambassador::synchronizationPointAchieved(const char* label) 
 {
     M_Synchronization_Point_Achieved req, rep;
 
@@ -720,13 +673,7 @@ void RTI::RTIambassador::synchronizationPointAchieved(const char* label) throw(
 // ----------------------------------------------------------------------------
 //! Request Federation Save with time.
 void RTI::RTIambassador::requestFederationSave(const char* label,
-                                               const RTI::FedTime& theTime) throw(RTI::FederationTimeAlreadyPassed,
-                                                                                  RTI::InvalidFederationTime,
-                                                                                  RTI::FederateNotExecutionMember,
-                                                                                  RTI::ConcurrentAccessAttempted,
-                                                                                  RTI::SaveInProgress,
-                                                                                  RTI::RestoreInProgress,
-                                                                                  RTI::RTIinternalError)
+                                               const RTI::FedTime& theTime) 
 {
     M_Request_Federation_Save req, rep;
 
@@ -743,11 +690,7 @@ void RTI::RTIambassador::requestFederationSave(const char* label,
 
 // ----------------------------------------------------------------------------
 //! Request Federation Save without time.
-void RTI::RTIambassador::requestFederationSave(const char* label) throw(RTI::FederateNotExecutionMember,
-                                                                        RTI::ConcurrentAccessAttempted,
-                                                                        RTI::SaveInProgress,
-                                                                        RTI::RestoreInProgress,
-                                                                        RTI::RTIinternalError)
+void RTI::RTIambassador::requestFederationSave(const char* label) 
 {
     M_Request_Federation_Save req, rep;
 
@@ -762,11 +705,7 @@ void RTI::RTIambassador::requestFederationSave(const char* label) throw(RTI::Fed
 
 // ----------------------------------------------------------------------------
 //! Federate Save Begun.
-void RTI::RTIambassador::federateSaveBegun() throw(RTI::SaveNotInitiated,
-                                                   RTI::FederateNotExecutionMember,
-                                                   RTI::ConcurrentAccessAttempted,
-                                                   RTI::RestoreInProgress,
-                                                   RTI::RTIinternalError)
+void RTI::RTIambassador::federateSaveBegun() 
 {
     M_Federate_Save_Begun req, rep;
 
@@ -780,11 +719,7 @@ void RTI::RTIambassador::federateSaveBegun() throw(RTI::SaveNotInitiated,
 
 // ----------------------------------------------------------------------------
 //! Federate Save Complete.
-void RTI::RTIambassador::federateSaveComplete() throw(RTI::SaveNotInitiated,
-                                                      RTI::FederateNotExecutionMember,
-                                                      RTI::ConcurrentAccessAttempted,
-                                                      RTI::RestoreInProgress,
-                                                      RTI::RTIinternalError)
+void RTI::RTIambassador::federateSaveComplete() 
 {
     M_Federate_Save_Complete req, rep;
 
@@ -796,11 +731,7 @@ void RTI::RTIambassador::federateSaveComplete() throw(RTI::SaveNotInitiated,
 
 // ----------------------------------------------------------------------------
 // Federate Save Not Complete.
-void RTI::RTIambassador::federateSaveNotComplete() throw(RTI::SaveNotInitiated,
-                                                         RTI::FederateNotExecutionMember,
-                                                         RTI::ConcurrentAccessAttempted,
-                                                         RTI::RestoreInProgress,
-                                                         RTI::RTIinternalError)
+void RTI::RTIambassador::federateSaveNotComplete() 
 {
     M_Federate_Save_Not_Complete req, rep;
 
@@ -813,11 +744,7 @@ void RTI::RTIambassador::federateSaveNotComplete() throw(RTI::SaveNotInitiated,
 
 // ----------------------------------------------------------------------------
 //! Request Restore.
-void RTI::RTIambassador::requestFederationRestore(const char* label) throw(RTI::RTIinternalError,
-                                                                           RTI::RestoreInProgress,
-                                                                           RTI::SaveInProgress,
-                                                                           RTI::ConcurrentAccessAttempted,
-                                                                           RTI::FederateNotExecutionMember)
+void RTI::RTIambassador::requestFederationRestore(const char* label) 
 {
     M_Request_Federation_Restore req, rep;
 
@@ -830,11 +757,7 @@ void RTI::RTIambassador::requestFederationRestore(const char* label) throw(RTI::
 
 // ----------------------------------------------------------------------------
 //! Restore Complete.
-void RTI::RTIambassador::federateRestoreComplete() throw(RTI::RTIinternalError,
-                                                         RTI::SaveInProgress,
-                                                         RTI::ConcurrentAccessAttempted,
-                                                         RTI::FederateNotExecutionMember,
-                                                         RTI::RestoreNotRequested)
+void RTI::RTIambassador::federateRestoreComplete() 
 {
     M_Federate_Restore_Complete req, rep;
 
@@ -847,11 +770,7 @@ void RTI::RTIambassador::federateRestoreComplete() throw(RTI::RTIinternalError,
 
 // ----------------------------------------------------------------------------
 //! Federate Restore Not Complete.
-void RTI::RTIambassador::federateRestoreNotComplete() throw(RTI::RTIinternalError,
-                                                            RTI::SaveInProgress,
-                                                            RTI::ConcurrentAccessAttempted,
-                                                            RTI::FederateNotExecutionMember,
-                                                            RTI::RestoreNotRequested)
+void RTI::RTIambassador::federateRestoreNotComplete() 
 {
     M_Federate_Restore_Not_Complete req, rep;
 
@@ -864,15 +783,7 @@ void RTI::RTIambassador::federateRestoreNotComplete() throw(RTI::RTIinternalErro
 
 // ----------------------------------------------------------------------------
 // Publish Object Class
-void RTI::RTIambassador::publishObjectClass(ObjectClassHandle theClass, const AttributeHandleSet& attributeList) throw(
-    RTI::RTIinternalError,
-    RTI::RestoreInProgress,
-    RTI::SaveInProgress,
-    RTI::ConcurrentAccessAttempted,
-    RTI::FederateNotExecutionMember,
-    RTI::OwnershipAcquisitionPending,
-    RTI::AttributeNotDefined,
-    RTI::ObjectClassNotDefined)
+void RTI::RTIambassador::publishObjectClass(ObjectClassHandle theClass, const AttributeHandleSet& attributeList) 
 {
     M_Publish_Object_Class req, rep;
     const std::vector<unsigned long>& AHSI = certi_cast<AttributeHandleSetImp>()(attributeList).getAttributeHandles();
@@ -890,14 +801,7 @@ void RTI::RTIambassador::publishObjectClass(ObjectClassHandle theClass, const At
 
 // ----------------------------------------------------------------------------
 // UnPublish Object Class
-void RTI::RTIambassador::unpublishObjectClass(ObjectClassHandle theClass) throw(RTI::RTIinternalError,
-                                                                                RTI::RestoreInProgress,
-                                                                                RTI::SaveInProgress,
-                                                                                RTI::ConcurrentAccessAttempted,
-                                                                                RTI::FederateNotExecutionMember,
-                                                                                RTI::OwnershipAcquisitionPending,
-                                                                                RTI::ObjectClassNotPublished,
-                                                                                RTI::ObjectClassNotDefined)
+void RTI::RTIambassador::unpublishObjectClass(ObjectClassHandle theClass) 
 {
     M_Unpublish_Object_Class req, rep;
 
@@ -910,13 +814,7 @@ void RTI::RTIambassador::unpublishObjectClass(ObjectClassHandle theClass) throw(
 
 // ----------------------------------------------------------------------------
 // Publish Interaction Class
-void RTI::RTIambassador::publishInteractionClass(InteractionClassHandle theInteraction) throw(
-    RTI::RTIinternalError,
-    RTI::RestoreInProgress,
-    RTI::SaveInProgress,
-    RTI::ConcurrentAccessAttempted,
-    RTI::FederateNotExecutionMember,
-    RTI::InteractionClassNotDefined)
+void RTI::RTIambassador::publishInteractionClass(InteractionClassHandle theInteraction) 
 {
     M_Publish_Interaction_Class req, rep;
 
@@ -927,14 +825,7 @@ void RTI::RTIambassador::publishInteractionClass(InteractionClassHandle theInter
 
 // ----------------------------------------------------------------------------
 // Publish Interaction Class
-void RTI::RTIambassador::unpublishInteractionClass(InteractionClassHandle theInteraction) throw(
-    RTI::RTIinternalError,
-    RTI::RestoreInProgress,
-    RTI::SaveInProgress,
-    RTI::ConcurrentAccessAttempted,
-    RTI::FederateNotExecutionMember,
-    RTI::InteractionClassNotPublished,
-    RTI::InteractionClassNotDefined)
+void RTI::RTIambassador::unpublishInteractionClass(InteractionClassHandle theInteraction) 
 {
     M_Unpublish_Interaction_Class req, rep;
 
@@ -946,13 +837,7 @@ void RTI::RTIambassador::unpublishInteractionClass(InteractionClassHandle theInt
 // Subscribe Object Class Attributes
 void RTI::RTIambassador::subscribeObjectClassAttributes(ObjectClassHandle theClass,
                                                         const AttributeHandleSet& attributeList,
-                                                        RTI::Boolean active) throw(RTI::RTIinternalError,
-                                                                                   RTI::RestoreInProgress,
-                                                                                   RTI::SaveInProgress,
-                                                                                   RTI::ConcurrentAccessAttempted,
-                                                                                   RTI::FederateNotExecutionMember,
-                                                                                   RTI::AttributeNotDefined,
-                                                                                   RTI::ObjectClassNotDefined)
+                                                        RTI::Boolean active) 
 {
     M_Subscribe_Object_Class_Attributes req, rep;
     Debug(G, pdGendoc) << "enter RTIambassador::subscribeObjectClassAttributes" << std::endl;
@@ -971,13 +856,7 @@ void RTI::RTIambassador::subscribeObjectClassAttributes(ObjectClassHandle theCla
 
 // ----------------------------------------------------------------------------
 // UnSubscribe Object Class Attribute
-void RTI::RTIambassador::unsubscribeObjectClass(ObjectClassHandle theClass) throw(RTI::RTIinternalError,
-                                                                                  RTI::RestoreInProgress,
-                                                                                  RTI::SaveInProgress,
-                                                                                  RTI::ConcurrentAccessAttempted,
-                                                                                  RTI::FederateNotExecutionMember,
-                                                                                  RTI::ObjectClassNotSubscribed,
-                                                                                  RTI::ObjectClassNotDefined)
+void RTI::RTIambassador::unsubscribeObjectClass(ObjectClassHandle theClass) 
 {
     M_Unsubscribe_Object_Class req, rep;
 
@@ -988,13 +867,7 @@ void RTI::RTIambassador::unsubscribeObjectClass(ObjectClassHandle theClass) thro
 // ----------------------------------------------------------------------------
 // Subscribe Interaction Class
 void RTI::RTIambassador::subscribeInteractionClass(InteractionClassHandle theClass,
-                                                   RTI::Boolean /*active*/) throw(RTI::RTIinternalError,
-                                                                                  RTI::RestoreInProgress,
-                                                                                  RTI::SaveInProgress,
-                                                                                  RTI::FederateLoggingServiceCalls,
-                                                                                  RTI::ConcurrentAccessAttempted,
-                                                                                  RTI::FederateNotExecutionMember,
-                                                                                  RTI::InteractionClassNotDefined)
+                                                   RTI::Boolean /*active*/) 
 {
     M_Subscribe_Interaction_Class req, rep;
     req.setInteractionClass(theClass);
@@ -1003,14 +876,7 @@ void RTI::RTIambassador::subscribeInteractionClass(InteractionClassHandle theCla
 
 // ----------------------------------------------------------------------------
 // UnSubscribe Interaction Class
-void RTI::RTIambassador::unsubscribeInteractionClass(InteractionClassHandle theClass) throw(
-    RTI::RTIinternalError,
-    RTI::RestoreInProgress,
-    RTI::SaveInProgress,
-    RTI::ConcurrentAccessAttempted,
-    RTI::FederateNotExecutionMember,
-    RTI::InteractionClassNotSubscribed,
-    RTI::InteractionClassNotDefined)
+void RTI::RTIambassador::unsubscribeInteractionClass(InteractionClassHandle theClass) 
 {
     M_Unsubscribe_Interaction_Class req, rep;
 
@@ -1022,14 +888,7 @@ void RTI::RTIambassador::unsubscribeInteractionClass(InteractionClassHandle theC
 // Register Object
 RTI::ObjectHandle
 RTI::RTIambassador::registerObjectInstance(ObjectClassHandle theClass,
-                                           const char* theObjectName) throw(RTI::RTIinternalError,
-                                                                            RTI::RestoreInProgress,
-                                                                            RTI::SaveInProgress,
-                                                                            RTI::ConcurrentAccessAttempted,
-                                                                            RTI::FederateNotExecutionMember,
-                                                                            RTI::ObjectAlreadyRegistered,
-                                                                            RTI::ObjectClassNotPublished,
-                                                                            RTI::ObjectClassNotDefined)
+                                           const char* theObjectName) 
 {
     M_Register_Object_Instance req, rep;
 
@@ -1042,13 +901,7 @@ RTI::RTIambassador::registerObjectInstance(ObjectClassHandle theClass,
 
 // ----------------------------------------------------------------------------
 RTI::ObjectHandle
-RTI::RTIambassador::registerObjectInstance(ObjectClassHandle theClass) throw(RTI::RTIinternalError,
-                                                                             RTI::RestoreInProgress,
-                                                                             RTI::SaveInProgress,
-                                                                             RTI::ConcurrentAccessAttempted,
-                                                                             RTI::FederateNotExecutionMember,
-                                                                             RTI::ObjectClassNotPublished,
-                                                                             RTI::ObjectClassNotDefined)
+RTI::RTIambassador::registerObjectInstance(ObjectClassHandle theClass) 
 {
     M_Register_Object_Instance req, rep;
 
@@ -1063,15 +916,7 @@ RTI::EventRetractionHandle
 RTI::RTIambassador::updateAttributeValues(ObjectHandle theObject,
                                           const AttributeHandleValuePairSet& theAttributes,
                                           const RTI::FedTime& theTime,
-                                          const char* theTag) throw(RTI::ObjectNotKnown,
-                                                                    RTI::AttributeNotDefined,
-                                                                    RTI::AttributeNotOwned,
-                                                                    RTI::InvalidFederationTime,
-                                                                    RTI::FederateNotExecutionMember,
-                                                                    RTI::ConcurrentAccessAttempted,
-                                                                    RTI::SaveInProgress,
-                                                                    RTI::RestoreInProgress,
-                                                                    RTI::RTIinternalError)
+                                          const char* theTag) 
 {
     Debug(G, pdGendoc) << "enter RTIambassador::updateAttributeValues with time" << std::endl;
     M_Update_Attribute_Values req, rep;
@@ -1104,14 +949,7 @@ RTI::RTIambassador::updateAttributeValues(ObjectHandle theObject,
 // ----------------------------------------------------------------------------
 void RTI::RTIambassador::updateAttributeValues(ObjectHandle the_object,
                                                const AttributeHandleValuePairSet& theAttributes,
-                                               const char* theTag) throw(RTI::RTIinternalError,
-                                                                         RTI::RestoreInProgress,
-                                                                         RTI::SaveInProgress,
-                                                                         RTI::ConcurrentAccessAttempted,
-                                                                         RTI::FederateNotExecutionMember,
-                                                                         RTI::AttributeNotOwned,
-                                                                         RTI::AttributeNotDefined,
-                                                                         RTI::ObjectNotKnown)
+                                               const char* theTag) 
 {
     Debug(G, pdGendoc) << "enter RTIambassador::updateAttributeValues without time" << std::endl;
     M_Update_Attribute_Values req, rep;
@@ -1141,15 +979,7 @@ RTI::EventRetractionHandle
 RTI::RTIambassador::sendInteraction(InteractionClassHandle theInteraction,
                                     const ParameterHandleValuePairSet& theParameters,
                                     const RTI::FedTime& theTime,
-                                    const char* theTag) throw(RTI::InteractionClassNotDefined,
-                                                              RTI::InteractionClassNotPublished,
-                                                              RTI::InteractionParameterNotDefined,
-                                                              RTI::InvalidFederationTime,
-                                                              RTI::FederateNotExecutionMember,
-                                                              RTI::ConcurrentAccessAttempted,
-                                                              RTI::SaveInProgress,
-                                                              RTI::RestoreInProgress,
-                                                              RTI::RTIinternalError)
+                                    const char* theTag) 
 {
     M_Send_Interaction req, rep;
     RTI::EventRetractionHandle eventRetraction;
@@ -1184,14 +1014,7 @@ RTI::RTIambassador::sendInteraction(InteractionClassHandle theInteraction,
  */
 void RTI::RTIambassador::sendInteraction(InteractionClassHandle theInteraction,
                                          const ParameterHandleValuePairSet& theParameters,
-                                         const char* theTag) throw(RTI::RTIinternalError,
-                                                                   RTI::RestoreInProgress,
-                                                                   RTI::SaveInProgress,
-                                                                   RTI::ConcurrentAccessAttempted,
-                                                                   RTI::FederateNotExecutionMember,
-                                                                   RTI::InteractionParameterNotDefined,
-                                                                   RTI::InteractionClassNotPublished,
-                                                                   RTI::InteractionClassNotDefined)
+                                         const char* theTag) 
 {
     M_Send_Interaction req, rep;
 
@@ -1212,14 +1035,7 @@ void RTI::RTIambassador::sendInteraction(InteractionClassHandle theInteraction,
 
 // ----------------------------------------------------------------------------
 RTI::EventRetractionHandle RTI::RTIambassador::deleteObjectInstance(
-    ObjectHandle theObject, const RTI::FedTime& theTime, const char* theTag) throw(RTI::ObjectNotKnown,
-                                                                                   RTI::DeletePrivilegeNotHeld,
-                                                                                   RTI::InvalidFederationTime,
-                                                                                   RTI::FederateNotExecutionMember,
-                                                                                   RTI::ConcurrentAccessAttempted,
-                                                                                   RTI::SaveInProgress,
-                                                                                   RTI::RestoreInProgress,
-                                                                                   RTI::RTIinternalError)
+    ObjectHandle theObject, const RTI::FedTime& theTime, const char* theTag) 
 {
     M_Delete_Object_Instance req, rep;
     RTI::EventRetractionHandle eventRetraction;
@@ -1239,13 +1055,7 @@ RTI::EventRetractionHandle RTI::RTIambassador::deleteObjectInstance(
 
 // ----------------------------------------------------------------------------
 void RTI::RTIambassador::deleteObjectInstance(ObjectHandle theObject,
-                                              const char* theTag) throw(RTI::RTIinternalError,
-                                                                        RTI::RestoreInProgress,
-                                                                        RTI::SaveInProgress,
-                                                                        RTI::ConcurrentAccessAttempted,
-                                                                        RTI::FederateNotExecutionMember,
-                                                                        RTI::DeletePrivilegeNotHeld,
-                                                                        RTI::ObjectNotKnown)
+                                              const char* theTag) 
 {
     M_Delete_Object_Instance req, rep;
 
@@ -1259,13 +1069,7 @@ void RTI::RTIambassador::deleteObjectInstance(ObjectHandle theObject,
 
 // ----------------------------------------------------------------------------
 // Local Delete Object Instance
-void RTI::RTIambassador::localDeleteObjectInstance(ObjectHandle theObject) throw(RTI::RTIinternalError,
-                                                                                 RTI::RestoreInProgress,
-                                                                                 RTI::SaveInProgress,
-                                                                                 RTI::ConcurrentAccessAttempted,
-                                                                                 RTI::FederateNotExecutionMember,
-                                                                                 RTI::FederateOwnsAttributes,
-                                                                                 RTI::ObjectNotKnown)
+void RTI::RTIambassador::localDeleteObjectInstance(ObjectHandle theObject) 
 {
     throw RTI::RTIinternalError("unimplemented service localDeleteObjectInstance");
     M_Local_Delete_Object_Instance req, rep;
@@ -1279,15 +1083,7 @@ void RTI::RTIambassador::localDeleteObjectInstance(ObjectHandle theObject) throw
 void RTI::RTIambassador::changeAttributeTransportationType(
     ObjectHandle theObject,
     const AttributeHandleSet& theAttributes,
-    TransportationHandle theType) throw(RTI::RTIinternalError,
-                                        RTI::RestoreInProgress,
-                                        RTI::SaveInProgress,
-                                        RTI::ConcurrentAccessAttempted,
-                                        RTI::FederateNotExecutionMember,
-                                        RTI::InvalidTransportationHandle,
-                                        RTI::AttributeNotOwned,
-                                        RTI::AttributeNotDefined,
-                                        RTI::ObjectNotKnown)
+    TransportationHandle theType) 
 {
     M_Change_Attribute_Transportation_Type req, rep;
     const std::vector<AttributeHandle>& AHS = certi_cast<AttributeHandleSetImp>()(theAttributes).getAttributeHandles();
@@ -1304,14 +1100,7 @@ void RTI::RTIambassador::changeAttributeTransportationType(
 // ----------------------------------------------------------------------------
 // Change Interaction Transportation Type
 void RTI::RTIambassador::changeInteractionTransportationType(
-    InteractionClassHandle theClass, TransportationHandle theType) throw(RTI::RTIinternalError,
-                                                                         RTI::RestoreInProgress,
-                                                                         RTI::SaveInProgress,
-                                                                         RTI::ConcurrentAccessAttempted,
-                                                                         RTI::FederateNotExecutionMember,
-                                                                         RTI::InvalidTransportationHandle,
-                                                                         RTI::InteractionClassNotPublished,
-                                                                         RTI::InteractionClassNotDefined)
+    InteractionClassHandle theClass, TransportationHandle theType) 
 {
     M_Change_Interaction_Transportation_Type req, rep;
 
@@ -1323,14 +1112,7 @@ void RTI::RTIambassador::changeInteractionTransportationType(
 
 // ----------------------------------------------------------------------------
 // Request Attribute Value Update
-void RTI::RTIambassador::requestObjectAttributeValueUpdate(ObjectHandle theObject, const AttributeHandleSet& ahs) throw(
-    RTI::RTIinternalError,
-    RTI::RestoreInProgress,
-    RTI::SaveInProgress,
-    RTI::ConcurrentAccessAttempted,
-    RTI::FederateNotExecutionMember,
-    RTI::AttributeNotDefined,
-    RTI::ObjectNotKnown)
+void RTI::RTIambassador::requestObjectAttributeValueUpdate(ObjectHandle theObject, const AttributeHandleSet& ahs) 
 {
     M_Request_Object_Attribute_Value_Update req, rep;
 
@@ -1344,13 +1126,7 @@ void RTI::RTIambassador::requestObjectAttributeValueUpdate(ObjectHandle theObjec
 
 // ----------------------------------------------------------------------------
 void RTI::RTIambassador::requestClassAttributeValueUpdate(
-    ObjectClassHandle theClass, const AttributeHandleSet& attrs) throw(RTI::RTIinternalError,
-                                                                       RTI::RestoreInProgress,
-                                                                       RTI::SaveInProgress,
-                                                                       RTI::ConcurrentAccessAttempted,
-                                                                       RTI::FederateNotExecutionMember,
-                                                                       RTI::AttributeNotDefined,
-                                                                       RTI::ObjectClassNotDefined)
+    ObjectClassHandle theClass, const AttributeHandleSet& attrs) 
 {
     M_Request_Class_Attribute_Value_Update req, rep;
     const std::vector<AttributeHandle>& AHSv = certi_cast<AttributeHandleSetImp>()(attrs).getAttributeHandles();
@@ -1368,14 +1144,7 @@ void RTI::RTIambassador::requestClassAttributeValueUpdate(
 // ----------------------------------------------------------------------------
 // UnConditional Attribute Ownership Divestiture
 void RTI::RTIambassador::unconditionalAttributeOwnershipDivestiture(
-    ObjectHandle theObject, const AttributeHandleSet& attrs) throw(RTI::ObjectNotKnown,
-                                                                   RTI::AttributeNotDefined,
-                                                                   RTI::AttributeNotOwned,
-                                                                   RTI::FederateNotExecutionMember,
-                                                                   RTI::ConcurrentAccessAttempted,
-                                                                   RTI::SaveInProgress,
-                                                                   RTI::RestoreInProgress,
-                                                                   RTI::RTIinternalError)
+    ObjectHandle theObject, const AttributeHandleSet& attrs) 
 {
     M_Unconditional_Attribute_Ownership_Divestiture req, rep;
     const std::vector<AttributeHandle>& AHSv = certi_cast<AttributeHandleSetImp>()(attrs).getAttributeHandles();
@@ -1394,15 +1163,7 @@ void RTI::RTIambassador::unconditionalAttributeOwnershipDivestiture(
 void RTI::RTIambassador::negotiatedAttributeOwnershipDivestiture(
     ObjectHandle theObject,
     const AttributeHandleSet& attrs,
-    const char* theTag) throw(RTI::ObjectNotKnown,
-                              RTI::AttributeNotDefined,
-                              RTI::AttributeNotOwned,
-                              RTI::AttributeAlreadyBeingDivested,
-                              RTI::FederateNotExecutionMember,
-                              RTI::ConcurrentAccessAttempted,
-                              RTI::SaveInProgress,
-                              RTI::RestoreInProgress,
-                              RTI::RTIinternalError)
+    const char* theTag) 
 {
     M_Negotiated_Attribute_Ownership_Divestiture req, rep;
     const std::vector<AttributeHandle>& AHSv = certi_cast<AttributeHandleSetImp>()(attrs).getAttributeHandles();
@@ -1424,16 +1185,7 @@ void RTI::RTIambassador::negotiatedAttributeOwnershipDivestiture(
 // Attribute Ownership Acquisition
 void RTI::RTIambassador::attributeOwnershipAcquisition(ObjectHandle theObject,
                                                        const AttributeHandleSet& desiredAttributes,
-                                                       const char* theTag) throw(RTI::ObjectNotKnown,
-                                                                                 RTI::ObjectClassNotPublished,
-                                                                                 RTI::AttributeNotDefined,
-                                                                                 RTI::AttributeNotPublished,
-                                                                                 RTI::FederateOwnsAttributes,
-                                                                                 RTI::FederateNotExecutionMember,
-                                                                                 RTI::ConcurrentAccessAttempted,
-                                                                                 RTI::SaveInProgress,
-                                                                                 RTI::RestoreInProgress,
-                                                                                 RTI::RTIinternalError)
+                                                       const char* theTag) 
 {
     M_Attribute_Ownership_Acquisition req, rep;
 
@@ -1449,15 +1201,7 @@ void RTI::RTIambassador::attributeOwnershipAcquisition(ObjectHandle theObject,
 // ----------------------------------------------------------------------------
 // Attribute Ownership Release Response
 RTI::AttributeHandleSet* RTI::RTIambassador::attributeOwnershipReleaseResponse(
-    ObjectHandle theObject, const AttributeHandleSet& attrs) throw(RTI::ObjectNotKnown,
-                                                                   RTI::AttributeNotDefined,
-                                                                   RTI::AttributeNotOwned,
-                                                                   RTI::FederateWasNotAskedToReleaseAttribute,
-                                                                   RTI::FederateNotExecutionMember,
-                                                                   RTI::ConcurrentAccessAttempted,
-                                                                   RTI::SaveInProgress,
-                                                                   RTI::RestoreInProgress,
-                                                                   RTI::RTIinternalError)
+    ObjectHandle theObject, const AttributeHandleSet& attrs) 
 {
     M_Attribute_Ownership_Release_Response req, rep;
     AttributeHandleSetImp* retval;
@@ -1481,15 +1225,7 @@ RTI::AttributeHandleSet* RTI::RTIambassador::attributeOwnershipReleaseResponse(
 // ----------------------------------------------------------------------------
 // Cancel Negotiated Attribute Ownership Divestiture
 void RTI::RTIambassador::cancelNegotiatedAttributeOwnershipDivestiture(
-    ObjectHandle theObject, const AttributeHandleSet& attrs) throw(RTI::ObjectNotKnown,
-                                                                   RTI::AttributeNotDefined,
-                                                                   RTI::AttributeNotOwned,
-                                                                   RTI::AttributeDivestitureWasNotRequested,
-                                                                   RTI::FederateNotExecutionMember,
-                                                                   RTI::ConcurrentAccessAttempted,
-                                                                   RTI::SaveInProgress,
-                                                                   RTI::RestoreInProgress,
-                                                                   RTI::RTIinternalError)
+    ObjectHandle theObject, const AttributeHandleSet& attrs) 
 {
     M_Cancel_Negotiated_Attribute_Ownership_Divestiture req, rep;
 
@@ -1502,15 +1238,7 @@ void RTI::RTIambassador::cancelNegotiatedAttributeOwnershipDivestiture(
 // ----------------------------------------------------------------------------
 // Cancel Attribute Ownership Acquisition
 void RTI::RTIambassador::cancelAttributeOwnershipAcquisition(
-    ObjectHandle theObject, const AttributeHandleSet& attrs) throw(RTI::ObjectNotKnown,
-                                                                   RTI::AttributeNotDefined,
-                                                                   RTI::AttributeAlreadyOwned,
-                                                                   RTI::AttributeAcquisitionWasNotRequested,
-                                                                   RTI::FederateNotExecutionMember,
-                                                                   RTI::ConcurrentAccessAttempted,
-                                                                   RTI::SaveInProgress,
-                                                                   RTI::RestoreInProgress,
-                                                                   RTI::RTIinternalError)
+    ObjectHandle theObject, const AttributeHandleSet& attrs) 
 {
     M_Cancel_Attribute_Ownership_Acquisition req, rep;
 
@@ -1523,17 +1251,7 @@ void RTI::RTIambassador::cancelAttributeOwnershipAcquisition(
 // ----------------------------------------------------------------------------
 // Attribute Ownership Acquisition If Available
 void RTI::RTIambassador::attributeOwnershipAcquisitionIfAvailable(
-    ObjectHandle theObject, const AttributeHandleSet& desired) throw(RTI::ObjectNotKnown,
-                                                                     RTI::ObjectClassNotPublished,
-                                                                     RTI::AttributeNotDefined,
-                                                                     RTI::AttributeNotPublished,
-                                                                     RTI::FederateOwnsAttributes,
-                                                                     RTI::AttributeAlreadyBeingAcquired,
-                                                                     RTI::FederateNotExecutionMember,
-                                                                     RTI::ConcurrentAccessAttempted,
-                                                                     RTI::SaveInProgress,
-                                                                     RTI::RestoreInProgress,
-                                                                     RTI::RTIinternalError)
+    ObjectHandle theObject, const AttributeHandleSet& desired) 
 {
     M_Attribute_Ownership_Acquisition_If_Available req, rep;
 
@@ -1546,13 +1264,7 @@ void RTI::RTIambassador::attributeOwnershipAcquisitionIfAvailable(
 // ----------------------------------------------------------------------------
 // Query Attribute Ownership
 void RTI::RTIambassador::queryAttributeOwnership(ObjectHandle theObject,
-                                                 AttributeHandle theAttribute) throw(RTI::RTIinternalError,
-                                                                                     RTI::RestoreInProgress,
-                                                                                     RTI::SaveInProgress,
-                                                                                     RTI::ConcurrentAccessAttempted,
-                                                                                     RTI::FederateNotExecutionMember,
-                                                                                     RTI::AttributeNotDefined,
-                                                                                     RTI::ObjectNotKnown)
+                                                 AttributeHandle theAttribute) 
 {
     M_Query_Attribute_Ownership req, rep;
 
@@ -1566,13 +1278,7 @@ void RTI::RTIambassador::queryAttributeOwnership(ObjectHandle theObject,
 // 5.16 Is Attribute Owned By Federate
 RTI::Boolean
 RTI::RTIambassador::isAttributeOwnedByFederate(ObjectHandle theObject,
-                                               AttributeHandle theAttribute) throw(RTI::ObjectNotKnown,
-                                                                                   RTI::AttributeNotDefined,
-                                                                                   RTI::FederateNotExecutionMember,
-                                                                                   RTI::ConcurrentAccessAttempted,
-                                                                                   RTI::SaveInProgress,
-                                                                                   RTI::RestoreInProgress,
-                                                                                   RTI::RTIinternalError)
+                                               AttributeHandle theAttribute) 
 {
     M_Is_Attribute_Owned_By_Federate req, rep;
 
@@ -1590,16 +1296,7 @@ RTI::RTIambassador::isAttributeOwnedByFederate(ObjectHandle theObject,
 // ----------------------------------------------------------------------------
 // Enable Time Regulation
 void RTI::RTIambassador::enableTimeRegulation(const RTI::FedTime& theFederateTime,
-                                              const RTI::FedTime& theLookahead) throw(RTI::RTIinternalError,
-                                                                                      RTI::RestoreInProgress,
-                                                                                      RTI::SaveInProgress,
-                                                                                      RTI::FederateNotExecutionMember,
-                                                                                      RTI::ConcurrentAccessAttempted,
-                                                                                      RTI::InvalidLookahead,
-                                                                                      RTI::InvalidFederationTime,
-                                                                                      RTI::TimeAdvanceAlreadyInProgress,
-                                                                                      RTI::EnableTimeRegulationPending,
-                                                                                      RTI::TimeRegulationAlreadyEnabled)
+                                              const RTI::FedTime& theLookahead) 
 {
     M_Enable_Time_Regulation req, rep;
 
@@ -1611,12 +1308,7 @@ void RTI::RTIambassador::enableTimeRegulation(const RTI::FedTime& theFederateTim
 
 // ----------------------------------------------------------------------------
 // Disable Time Regulation
-void RTI::RTIambassador::disableTimeRegulation() throw(RTI::RTIinternalError,
-                                                       RTI::RestoreInProgress,
-                                                       RTI::SaveInProgress,
-                                                       RTI::FederateNotExecutionMember,
-                                                       RTI::ConcurrentAccessAttempted,
-                                                       RTI::TimeRegulationWasNotEnabled)
+void RTI::RTIambassador::disableTimeRegulation() 
 {
     M_Disable_Time_Regulation req, rep;
 
@@ -1625,14 +1317,7 @@ void RTI::RTIambassador::disableTimeRegulation() throw(RTI::RTIinternalError,
 
 // ----------------------------------------------------------------------------
 // Enable Time Constrained
-void RTI::RTIambassador::enableTimeConstrained() throw(RTI::TimeConstrainedAlreadyEnabled, //not implemented
-                                                       RTI::EnableTimeConstrainedPending, //not implemented
-                                                       RTI::TimeAdvanceAlreadyInProgress, //not implemented
-                                                       RTI::FederateNotExecutionMember,
-                                                       RTI::ConcurrentAccessAttempted,
-                                                       RTI::SaveInProgress,
-                                                       RTI::RestoreInProgress,
-                                                       RTI::RTIinternalError)
+void RTI::RTIambassador::enableTimeConstrained() 
 {
     M_Enable_Time_Constrained req, rep;
 
@@ -1641,12 +1326,7 @@ void RTI::RTIambassador::enableTimeConstrained() throw(RTI::TimeConstrainedAlrea
 
 // ----------------------------------------------------------------------------
 // Disable Time Constrained
-void RTI::RTIambassador::disableTimeConstrained() throw(RTI::TimeConstrainedWasNotEnabled, //not implemented
-                                                        RTI::FederateNotExecutionMember,
-                                                        RTI::ConcurrentAccessAttempted,
-                                                        RTI::SaveInProgress,
-                                                        RTI::RestoreInProgress,
-                                                        RTI::RTIinternalError)
+void RTI::RTIambassador::disableTimeConstrained() 
 {
     M_Disable_Time_Constrained req, rep;
     privateRefs->executeService(&req, &rep);
@@ -1654,17 +1334,7 @@ void RTI::RTIambassador::disableTimeConstrained() throw(RTI::TimeConstrainedWasN
 
 // ----------------------------------------------------------------------------
 // Time Advance Request
-void RTI::RTIambassador::timeAdvanceRequest(const RTI::FedTime& theTime) throw(
-    RTI::TimeAdvanceAlreadyInProgress,
-    RTI::FederationTimeAlreadyPassed,
-    RTI::InvalidFederationTime,
-    RTI::EnableTimeRegulationPending, //not implemented
-    RTI::EnableTimeConstrainedPending, //not implemented
-    RTI::FederateNotExecutionMember,
-    RTI::ConcurrentAccessAttempted,
-    RTI::SaveInProgress,
-    RTI::RestoreInProgress,
-    RTI::RTIinternalError)
+void RTI::RTIambassador::timeAdvanceRequest(const RTI::FedTime& theTime) 
 {
     M_Time_Advance_Request req, rep;
 
@@ -1674,17 +1344,7 @@ void RTI::RTIambassador::timeAdvanceRequest(const RTI::FedTime& theTime) throw(
 
 // ----------------------------------------------------------------------------
 // Time Advance Request Available
-void RTI::RTIambassador::timeAdvanceRequestAvailable(const RTI::FedTime& theTime) throw(
-    RTI::RTIinternalError,
-    RTI::RestoreInProgress,
-    RTI::SaveInProgress,
-    RTI::ConcurrentAccessAttempted,
-    RTI::FederateNotExecutionMember,
-    RTI::EnableTimeConstrainedPending,
-    RTI::EnableTimeRegulationPending,
-    RTI::TimeAdvanceAlreadyInProgress,
-    RTI::FederationTimeAlreadyPassed,
-    RTI::InvalidFederationTime)
+void RTI::RTIambassador::timeAdvanceRequestAvailable(const RTI::FedTime& theTime) 
 {
     M_Time_Advance_Request_Available req, rep;
 
@@ -1695,17 +1355,7 @@ void RTI::RTIambassador::timeAdvanceRequestAvailable(const RTI::FedTime& theTime
 
 // ----------------------------------------------------------------------------
 // Next Event Request
-void RTI::RTIambassador::nextEventRequest(const RTI::FedTime& theTime) throw(
-    RTI::TimeAdvanceAlreadyInProgress,
-    RTI::FederationTimeAlreadyPassed,
-    RTI::InvalidFederationTime,
-    RTI::EnableTimeRegulationPending, //not implemented
-    RTI::EnableTimeConstrainedPending, //not implemented
-    RTI::FederateNotExecutionMember,
-    RTI::ConcurrentAccessAttempted,
-    RTI::SaveInProgress,
-    RTI::RestoreInProgress,
-    RTI::RTIinternalError)
+void RTI::RTIambassador::nextEventRequest(const RTI::FedTime& theTime) 
 {
     M_Next_Event_Request req, rep;
 
@@ -1715,16 +1365,7 @@ void RTI::RTIambassador::nextEventRequest(const RTI::FedTime& theTime) throw(
 
 // ----------------------------------------------------------------------------
 // Next Event Request Available
-void RTI::RTIambassador::nextEventRequestAvailable(const RTI::FedTime& theTime) throw(RTI::RTIinternalError,
-                                                                                      RTI::RestoreInProgress,
-                                                                                      RTI::SaveInProgress,
-                                                                                      RTI::ConcurrentAccessAttempted,
-                                                                                      RTI::FederateNotExecutionMember,
-                                                                                      RTI::EnableTimeConstrainedPending,
-                                                                                      RTI::EnableTimeRegulationPending,
-                                                                                      RTI::TimeAdvanceAlreadyInProgress,
-                                                                                      RTI::FederationTimeAlreadyPassed,
-                                                                                      RTI::InvalidFederationTime)
+void RTI::RTIambassador::nextEventRequestAvailable(const RTI::FedTime& theTime) 
 {
     M_Next_Event_Request_Available req, rep;
 
@@ -1734,17 +1375,7 @@ void RTI::RTIambassador::nextEventRequestAvailable(const RTI::FedTime& theTime) 
 
 // ----------------------------------------------------------------------------
 // Flush Queue Request
-void RTI::RTIambassador::flushQueueRequest(const RTI::FedTime& theTime) throw(
-    RTI::TimeAdvanceAlreadyInProgress,
-    RTI::FederationTimeAlreadyPassed,
-    RTI::InvalidFederationTime,
-    RTI::EnableTimeRegulationPending, //not implemented
-    RTI::EnableTimeConstrainedPending, //not implemented
-    RTI::FederateNotExecutionMember,
-    RTI::ConcurrentAccessAttempted,
-    RTI::SaveInProgress,
-    RTI::RestoreInProgress,
-    RTI::RTIinternalError)
+void RTI::RTIambassador::flushQueueRequest(const RTI::FedTime& theTime) 
 {
     throw RTI::RTIinternalError("Unimplemented Service flushQueueRequest");
     M_Flush_Queue_Request req, rep;
@@ -1756,12 +1387,7 @@ void RTI::RTIambassador::flushQueueRequest(const RTI::FedTime& theTime) throw(
 
 // ----------------------------------------------------------------------------
 // Enable Asynchronous Delivery
-void RTI::RTIambassador::enableAsynchronousDelivery() throw(RTI::RTIinternalError,
-                                                            RTI::RestoreInProgress,
-                                                            RTI::SaveInProgress,
-                                                            RTI::ConcurrentAccessAttempted,
-                                                            RTI::FederateNotExecutionMember,
-                                                            RTI::AsynchronousDeliveryAlreadyEnabled)
+void RTI::RTIambassador::enableAsynchronousDelivery() 
 {
     // throw AsynchronousDeliveryAlreadyEnabled("Default value (non HLA)");
 
@@ -1772,12 +1398,7 @@ void RTI::RTIambassador::enableAsynchronousDelivery() throw(RTI::RTIinternalErro
 
 // ----------------------------------------------------------------------------
 // Disable Asynchronous Delivery
-void RTI::RTIambassador::disableAsynchronousDelivery() throw(RTI::RTIinternalError,
-                                                             RTI::RestoreInProgress,
-                                                             RTI::SaveInProgress,
-                                                             RTI::ConcurrentAccessAttempted,
-                                                             RTI::FederateNotExecutionMember,
-                                                             RTI::AsynchronousDeliveryAlreadyDisabled)
+void RTI::RTIambassador::disableAsynchronousDelivery() 
 {
     M_Disable_Asynchronous_Delivery req, rep;
 
@@ -1786,11 +1407,7 @@ void RTI::RTIambassador::disableAsynchronousDelivery() throw(RTI::RTIinternalErr
 
 // ----------------------------------------------------------------------------
 // Query LBTS
-void RTI::RTIambassador::queryLBTS(RTI::FedTime& theTime) throw(RTI::FederateNotExecutionMember,
-                                                                RTI::ConcurrentAccessAttempted,
-                                                                RTI::SaveInProgress,
-                                                                RTI::RestoreInProgress,
-                                                                RTI::RTIinternalError)
+void RTI::RTIambassador::queryLBTS(RTI::FedTime& theTime) 
 {
     M_Query_Lbts req, rep;
 
@@ -1801,11 +1418,7 @@ void RTI::RTIambassador::queryLBTS(RTI::FedTime& theTime) throw(RTI::FederateNot
 
 // ----------------------------------------------------------------------------
 // Query Federate Time
-void RTI::RTIambassador::queryFederateTime(RTI::FedTime& theTime) throw(RTI::FederateNotExecutionMember,
-                                                                        RTI::ConcurrentAccessAttempted,
-                                                                        RTI::SaveInProgress,
-                                                                        RTI::RestoreInProgress,
-                                                                        RTI::RTIinternalError)
+void RTI::RTIambassador::queryFederateTime(RTI::FedTime& theTime) 
 {
     M_Query_Federate_Time req, rep;
 
@@ -1816,11 +1429,7 @@ void RTI::RTIambassador::queryFederateTime(RTI::FedTime& theTime) throw(RTI::Fed
 
 // ----------------------------------------------------------------------------
 // Query Minimum Next Event Time
-void RTI::RTIambassador::queryMinNextEventTime(RTI::FedTime& theTime) throw(RTI::FederateNotExecutionMember,
-                                                                            RTI::ConcurrentAccessAttempted,
-                                                                            RTI::SaveInProgress,
-                                                                            RTI::RestoreInProgress,
-                                                                            RTI::RTIinternalError)
+void RTI::RTIambassador::queryMinNextEventTime(RTI::FedTime& theTime) 
 {
     M_Query_Min_Next_Event_Time req, rep;
 
@@ -1831,12 +1440,7 @@ void RTI::RTIambassador::queryMinNextEventTime(RTI::FedTime& theTime) throw(RTI:
 
 // ----------------------------------------------------------------------------
 // Modify Lookahead
-void RTI::RTIambassador::modifyLookahead(const RTI::FedTime& theLookahead) throw(RTI::RTIinternalError,
-                                                                                 RTI::RestoreInProgress,
-                                                                                 RTI::SaveInProgress,
-                                                                                 RTI::ConcurrentAccessAttempted,
-                                                                                 RTI::FederateNotExecutionMember,
-                                                                                 RTI::InvalidLookahead)
+void RTI::RTIambassador::modifyLookahead(const RTI::FedTime& theLookahead) 
 {
     M_Modify_Lookahead req, rep;
 
@@ -1847,11 +1451,7 @@ void RTI::RTIambassador::modifyLookahead(const RTI::FedTime& theLookahead) throw
 
 // ----------------------------------------------------------------------------
 // Query Lookahead
-void RTI::RTIambassador::queryLookahead(RTI::FedTime& theTime) throw(RTI::FederateNotExecutionMember,
-                                                                     RTI::ConcurrentAccessAttempted,
-                                                                     RTI::SaveInProgress,
-                                                                     RTI::RestoreInProgress,
-                                                                     RTI::RTIinternalError)
+void RTI::RTIambassador::queryLookahead(RTI::FedTime& theTime) 
 {
     M_Query_Lookahead req, rep;
 
@@ -1865,12 +1465,7 @@ void RTI::RTIambassador::queryLookahead(RTI::FedTime& theTime) throw(RTI::Federa
 
 // ----------------------------------------------------------------------------
 // Retract
-void RTI::RTIambassador::retract(RTI::EventRetractionHandle handle) throw(RTI::RTIinternalError,
-                                                                          RTI::RestoreInProgress,
-                                                                          RTI::SaveInProgress,
-                                                                          RTI::ConcurrentAccessAttempted,
-                                                                          RTI::FederateNotExecutionMember,
-                                                                          RTI::InvalidRetractionHandle)
+void RTI::RTIambassador::retract(RTI::EventRetractionHandle handle) 
 {
     throw RTI::RTIinternalError("Unimplemented Service retract");
     M_Retract req, rep;
@@ -1887,15 +1482,7 @@ void RTI::RTIambassador::retract(RTI::EventRetractionHandle handle) throw(RTI::R
 // Change Attribute Order Type
 void RTI::RTIambassador::changeAttributeOrderType(ObjectHandle theObject,
                                                   const AttributeHandleSet& attrs,
-                                                  OrderingHandle theType) throw(RTI::RTIinternalError,
-                                                                                RTI::RestoreInProgress,
-                                                                                RTI::SaveInProgress,
-                                                                                RTI::ConcurrentAccessAttempted,
-                                                                                RTI::FederateNotExecutionMember,
-                                                                                RTI::InvalidOrderingHandle,
-                                                                                RTI::AttributeNotOwned,
-                                                                                RTI::AttributeNotDefined,
-                                                                                RTI::ObjectNotKnown)
+                                                  OrderingHandle theType) 
 {
     M_Change_Attribute_Order_Type req, rep;
 
@@ -1909,14 +1496,7 @@ void RTI::RTIambassador::changeAttributeOrderType(ObjectHandle theObject,
 // ----------------------------------------------------------------------------
 // Change Interaction Order Type
 void RTI::RTIambassador::changeInteractionOrderType(InteractionClassHandle theClass,
-                                                    OrderingHandle theType) throw(RTI::RTIinternalError,
-                                                                                  RTI::RestoreInProgress,
-                                                                                  RTI::SaveInProgress,
-                                                                                  RTI::ConcurrentAccessAttempted,
-                                                                                  RTI::FederateNotExecutionMember,
-                                                                                  RTI::InvalidOrderingHandle,
-                                                                                  RTI::InteractionClassNotPublished,
-                                                                                  RTI::InteractionClassNotDefined)
+                                                    OrderingHandle theType) 
 {
     M_Change_Interaction_Order_Type req, rep;
 
@@ -1933,13 +1513,7 @@ void RTI::RTIambassador::changeInteractionOrderType(InteractionClassHandle theCl
     \return A Region object, associated with the created region
  */
 RTI::Region* RTI::RTIambassador::createRegion(SpaceHandle space,
-                                              ULong nb_extents) throw(RTI::SpaceNotDefined,
-                                                                      RTI::InvalidExtents,
-                                                                      RTI::FederateNotExecutionMember,
-                                                                      RTI::ConcurrentAccessAttempted,
-                                                                      RTI::SaveInProgress,
-                                                                      RTI::RestoreInProgress,
-                                                                      RTI::RTIinternalError)
+                                              ULong nb_extents) 
 {
     M_Ddm_Create_Region req, rep;
     req.setSpace(space);
@@ -1957,13 +1531,7 @@ RTI::Region* RTI::RTIambassador::createRegion(SpaceHandle space,
     the region services to the RTI.
     \param r The region to commit to the RTI
  */
-void RTI::RTIambassador::notifyAboutRegionModification(Region& r) throw(RTI::RegionNotKnown,
-                                                                        RTI::InvalidExtents,
-                                                                        RTI::FederateNotExecutionMember,
-                                                                        RTI::ConcurrentAccessAttempted,
-                                                                        RTI::SaveInProgress,
-                                                                        RTI::RestoreInProgress,
-                                                                        RTI::RTIinternalError)
+void RTI::RTIambassador::notifyAboutRegionModification(Region& r) 
 {
     try {
         RegionImp& region = dynamic_cast<RegionImp&>(r);
@@ -1989,13 +1557,7 @@ void RTI::RTIambassador::notifyAboutRegionModification(Region& r) throw(RTI::Reg
     \attention Always use this function to destroy a region. Do NOT
     use the C++ delete operator.
  */
-void RTI::RTIambassador::deleteRegion(Region* region) throw(RTI::RegionNotKnown,
-                                                            RTI::RegionInUse,
-                                                            RTI::FederateNotExecutionMember,
-                                                            RTI::ConcurrentAccessAttempted,
-                                                            RTI::SaveInProgress,
-                                                            RTI::RestoreInProgress,
-                                                            RTI::RTIinternalError)
+void RTI::RTIambassador::deleteRegion(Region* region) 
 {
     if (region == 0) {
         throw RegionNotKnown("");
@@ -2020,18 +1582,7 @@ RTI::ObjectHandle RTI::RTIambassador::registerObjectInstanceWithRegion(ObjectCla
                                                                        const char* tag,
                                                                        AttributeHandle attrs[],
                                                                        Region* regions[],
-                                                                       ULong nb) throw(RTI::ObjectClassNotDefined,
-                                                                                       RTI::ObjectClassNotPublished,
-                                                                                       RTI::AttributeNotDefined,
-                                                                                       RTI::AttributeNotPublished,
-                                                                                       RTI::RegionNotKnown,
-                                                                                       RTI::InvalidRegionContext,
-                                                                                       RTI::ObjectAlreadyRegistered,
-                                                                                       RTI::FederateNotExecutionMember,
-                                                                                       RTI::ConcurrentAccessAttempted,
-                                                                                       RTI::SaveInProgress,
-                                                                                       RTI::RestoreInProgress,
-                                                                                       RTI::RTIinternalError)
+                                                                       ULong nb) 
 {
     M_Ddm_Register_Object req, rep;
 
@@ -2055,17 +1606,7 @@ RTI::ObjectHandle RTI::RTIambassador::registerObjectInstanceWithRegion(ObjectCla
 RTI::ObjectHandle RTI::RTIambassador::registerObjectInstanceWithRegion(ObjectClassHandle object_class,
                                                                        RTI::AttributeHandle attrs[],
                                                                        RTI::Region* regions[],
-                                                                       ULong nb) throw(RTI::ObjectClassNotDefined,
-                                                                                       RTI::ObjectClassNotPublished,
-                                                                                       RTI::AttributeNotDefined,
-                                                                                       RTI::AttributeNotPublished,
-                                                                                       RTI::RegionNotKnown,
-                                                                                       RTI::InvalidRegionContext,
-                                                                                       RTI::FederateNotExecutionMember,
-                                                                                       RTI::ConcurrentAccessAttempted,
-                                                                                       RTI::SaveInProgress,
-                                                                                       RTI::RestoreInProgress,
-                                                                                       RTI::RTIinternalError)
+                                                                       ULong nb) 
 {
     M_Ddm_Register_Object req, rep;
 
@@ -2091,15 +1632,7 @@ RTI::ObjectHandle RTI::RTIambassador::registerObjectInstanceWithRegion(ObjectCla
     @sa unassociateRegionForUpdates
  */
 void RTI::RTIambassador::associateRegionForUpdates(
-    Region& region, ObjectHandle object, const AttributeHandleSet& attributes) throw(RTI::ObjectNotKnown,
-                                                                                     RTI::AttributeNotDefined,
-                                                                                     RTI::InvalidRegionContext,
-                                                                                     RTI::RegionNotKnown,
-                                                                                     RTI::FederateNotExecutionMember,
-                                                                                     RTI::ConcurrentAccessAttempted,
-                                                                                     RTI::SaveInProgress,
-                                                                                     RTI::RestoreInProgress,
-                                                                                     RTI::RTIinternalError)
+    Region& region, ObjectHandle object, const AttributeHandleSet& attributes) 
 {
     Debug(D, pdDebug) << "+ Associate Region for Updates" << endl;
 
@@ -2121,14 +1654,7 @@ void RTI::RTIambassador::associateRegionForUpdates(
     @see associateRegionForUpdates
  */
 void RTI::RTIambassador::unassociateRegionForUpdates(Region& region,
-                                                     ObjectHandle object) throw(RTI::ObjectNotKnown,
-                                                                                RTI::InvalidRegionContext,
-                                                                                RTI::RegionNotKnown,
-                                                                                RTI::FederateNotExecutionMember,
-                                                                                RTI::ConcurrentAccessAttempted,
-                                                                                RTI::SaveInProgress,
-                                                                                RTI::RestoreInProgress,
-                                                                                RTI::RTIinternalError)
+                                                     ObjectHandle object) 
 {
     Debug(D, pdDebug) << "+ Unassociate Region for Updates" << endl;
     M_Ddm_Unassociate_Region req, rep;
@@ -2152,15 +1678,7 @@ void RTI::RTIambassador::subscribeObjectClassAttributesWithRegion(
     ObjectClassHandle object_class,
     Region& region,
     const AttributeHandleSet& attributes,
-    Boolean passive) throw(RTI::ObjectClassNotDefined,
-                           RTI::AttributeNotDefined,
-                           RTI::RegionNotKnown,
-                           RTI::InvalidRegionContext,
-                           RTI::FederateNotExecutionMember,
-                           RTI::ConcurrentAccessAttempted,
-                           RTI::SaveInProgress,
-                           RTI::RestoreInProgress,
-                           RTI::RTIinternalError)
+    Boolean passive) 
 {
     Debug(D, pdDebug) << "+ Subscribe Object Class Attributes with Region" << endl;
     M_Ddm_Subscribe_Attributes req, rep;
@@ -2184,14 +1702,7 @@ void RTI::RTIambassador::subscribeObjectClassAttributesWithRegion(
     @sa subscribeObjectClassAttributesWithRegion
  */
 void RTI::RTIambassador::unsubscribeObjectClassWithRegion(ObjectClassHandle object_class,
-                                                          Region& region) throw(RTI::ObjectClassNotDefined,
-                                                                                RTI::RegionNotKnown,
-                                                                                RTI::ObjectClassNotSubscribed,
-                                                                                RTI::FederateNotExecutionMember,
-                                                                                RTI::ConcurrentAccessAttempted,
-                                                                                RTI::SaveInProgress,
-                                                                                RTI::RestoreInProgress,
-                                                                                RTI::RTIinternalError)
+                                                          Region& region) 
 {
     Debug(D, pdDebug) << "+ Unsubscribe Object Class " << object_class << " with Region" << endl;
     M_Ddm_Unsubscribe_Attributes req, rep;
@@ -2206,15 +1717,7 @@ void RTI::RTIambassador::unsubscribeObjectClassWithRegion(ObjectClassHandle obje
 // ----------------------------------------------------------------------------
 // Subscribe Interaction Class With Region
 void RTI::RTIambassador::subscribeInteractionClassWithRegion(
-    InteractionClassHandle ic, Region& region, RTI::Boolean passive) throw(RTI::InteractionClassNotDefined,
-                                                                           RTI::RegionNotKnown,
-                                                                           RTI::InvalidRegionContext,
-                                                                           RTI::FederateLoggingServiceCalls,
-                                                                           RTI::FederateNotExecutionMember,
-                                                                           RTI::ConcurrentAccessAttempted,
-                                                                           RTI::SaveInProgress,
-                                                                           RTI::RestoreInProgress,
-                                                                           RTI::RTIinternalError)
+    InteractionClassHandle ic, Region& region, RTI::Boolean passive) 
 {
     M_Ddm_Subscribe_Interaction req, rep;
 
@@ -2231,14 +1734,7 @@ void RTI::RTIambassador::subscribeInteractionClassWithRegion(
 // ----------------------------------------------------------------------------
 // UnSubscribe Interaction Class With Region
 void RTI::RTIambassador::unsubscribeInteractionClassWithRegion(InteractionClassHandle ic,
-                                                               Region& region) throw(RTI::InteractionClassNotDefined,
-                                                                                     RTI::InteractionClassNotSubscribed,
-                                                                                     RTI::RegionNotKnown,
-                                                                                     RTI::FederateNotExecutionMember,
-                                                                                     RTI::ConcurrentAccessAttempted,
-                                                                                     RTI::SaveInProgress,
-                                                                                     RTI::RestoreInProgress,
-                                                                                     RTI::RTIinternalError)
+                                                               Region& region) 
 {
     M_Ddm_Unsubscribe_Interaction req, rep;
 
@@ -2255,17 +1751,7 @@ RTI::RTIambassador::sendInteractionWithRegion(InteractionClassHandle interaction
                                               const ParameterHandleValuePairSet& par,
                                               const RTI::FedTime& time,
                                               const char* tag,
-                                              const Region& region) throw(RTI::InteractionClassNotDefined,
-                                                                          RTI::InteractionClassNotPublished,
-                                                                          RTI::InteractionParameterNotDefined,
-                                                                          RTI::InvalidFederationTime,
-                                                                          RTI::RegionNotKnown,
-                                                                          RTI::InvalidRegionContext,
-                                                                          RTI::FederateNotExecutionMember,
-                                                                          RTI::ConcurrentAccessAttempted,
-                                                                          RTI::SaveInProgress,
-                                                                          RTI::RestoreInProgress,
-                                                                          RTI::RTIinternalError)
+                                              const Region& region) 
 {
     M_Send_Interaction req, rep;
     EventRetractionHandle event;
@@ -2288,16 +1774,7 @@ RTI::RTIambassador::sendInteractionWithRegion(InteractionClassHandle interaction
 void RTI::RTIambassador::sendInteractionWithRegion(InteractionClassHandle interaction,
                                                    const ParameterHandleValuePairSet& par,
                                                    const char* tag,
-                                                   const Region& region) throw(RTI::InteractionClassNotDefined,
-                                                                               RTI::InteractionClassNotPublished,
-                                                                               RTI::InteractionParameterNotDefined,
-                                                                               RTI::RegionNotKnown,
-                                                                               RTI::InvalidRegionContext,
-                                                                               RTI::FederateNotExecutionMember,
-                                                                               RTI::ConcurrentAccessAttempted,
-                                                                               RTI::SaveInProgress,
-                                                                               RTI::RestoreInProgress,
-                                                                               RTI::RTIinternalError)
+                                                   const Region& region) 
 {
     M_Send_Interaction req, rep;
 
@@ -2317,14 +1794,7 @@ void RTI::RTIambassador::sendInteractionWithRegion(InteractionClassHandle intera
 void RTI::RTIambassador::requestClassAttributeValueUpdateWithRegion(
     ObjectClassHandle /*object*/,
     const AttributeHandleSet& attrs,
-    const Region& region) throw(RTI::RTIinternalError,
-                                RTI::RestoreInProgress,
-                                RTI::SaveInProgress,
-                                RTI::ConcurrentAccessAttempted,
-                                RTI::FederateNotExecutionMember,
-                                RTI::RegionNotKnown,
-                                RTI::AttributeNotDefined,
-                                RTI::ObjectClassNotDefined)
+    const Region& region) 
 {
     throw RTI::RTIinternalError("unimplemented service requestClassAttributeValueUpdateWithRegion");
 
@@ -2338,8 +1808,7 @@ void RTI::RTIambassador::requestClassAttributeValueUpdateWithRegion(
 /** Get object class handle
     \param theName Name of the object class
  */
-RTI::ObjectClassHandle RTI::RTIambassador::getObjectClassHandle(const char* theName) throw(
-    RTI::NameNotFound, RTI::FederateNotExecutionMember, RTI::ConcurrentAccessAttempted, RTI::RTIinternalError)
+RTI::ObjectClassHandle RTI::RTIambassador::getObjectClassHandle(const char* theName) 
 {
     M_Get_Object_Class_Handle req, rep;
 
@@ -2359,10 +1828,7 @@ RTI::ObjectClassHandle RTI::RTIambassador::getObjectClassHandle(const char* theN
     \return The class name associated with the handle, memory has to
     be freed by the caller.
  */
-char* RTI::RTIambassador::getObjectClassName(ObjectClassHandle handle) throw(RTI::ObjectClassNotDefined,
-                                                                             RTI::FederateNotExecutionMember,
-                                                                             RTI::ConcurrentAccessAttempted,
-                                                                             RTI::RTIinternalError)
+char* RTI::RTIambassador::getObjectClassName(ObjectClassHandle handle) 
 {
     M_Get_Object_Class_Name req, rep;
 
@@ -2378,11 +1844,7 @@ char* RTI::RTIambassador::getObjectClassName(ObjectClassHandle handle) throw(RTI
  */
 RTI::AttributeHandle
 RTI::RTIambassador::getAttributeHandle(const char* theName,
-                                       ObjectClassHandle whichClass) throw(RTI::ObjectClassNotDefined,
-                                                                           RTI::NameNotFound,
-                                                                           RTI::FederateNotExecutionMember,
-                                                                           RTI::ConcurrentAccessAttempted,
-                                                                           RTI::RTIinternalError)
+                                       ObjectClassHandle whichClass) 
 {
     Debug(G, pdGendoc) << "enter RTI::RTIambassador::getAttributeHandle" << std::endl;
     M_Get_Attribute_Handle req, rep;
@@ -2401,11 +1863,7 @@ RTI::RTIambassador::getAttributeHandle(const char* theName,
  */
 
 char* RTI::RTIambassador::getAttributeName(AttributeHandle theHandle,
-                                           ObjectClassHandle whichClass) throw(RTI::ObjectClassNotDefined,
-                                                                               RTI::AttributeNotDefined,
-                                                                               RTI::FederateNotExecutionMember,
-                                                                               RTI::ConcurrentAccessAttempted,
-                                                                               RTI::RTIinternalError)
+                                           ObjectClassHandle whichClass) 
 {
     M_Get_Attribute_Name req, rep;
 
@@ -2417,8 +1875,7 @@ char* RTI::RTIambassador::getAttributeName(AttributeHandle theHandle,
 
 // ----------------------------------------------------------------------------
 // Get Interaction Class Handle
-RTI::InteractionClassHandle RTI::RTIambassador::getInteractionClassHandle(const char* theName) throw(
-    RTI::NameNotFound, RTI::FederateNotExecutionMember, RTI::ConcurrentAccessAttempted, RTI::RTIinternalError)
+RTI::InteractionClassHandle RTI::RTIambassador::getInteractionClassHandle(const char* theName) 
 {
     M_Get_Interaction_Class_Handle req, rep;
 
@@ -2431,11 +1888,7 @@ RTI::InteractionClassHandle RTI::RTIambassador::getInteractionClassHandle(const 
 
 // ----------------------------------------------------------------------------
 // Get Interaction Class Name
-char* RTI::RTIambassador::getInteractionClassName(InteractionClassHandle theHandle) throw(
-    RTI::InteractionClassNotDefined,
-    RTI::FederateNotExecutionMember,
-    RTI::ConcurrentAccessAttempted,
-    RTI::RTIinternalError)
+char* RTI::RTIambassador::getInteractionClassName(InteractionClassHandle theHandle) 
 {
     M_Get_Interaction_Class_Name req, rep;
 
@@ -2450,11 +1903,7 @@ char* RTI::RTIambassador::getInteractionClassName(InteractionClassHandle theHand
 // Get Parameter Handle
 RTI::ParameterHandle
 RTI::RTIambassador::getParameterHandle(const char* theName,
-                                       InteractionClassHandle whichClass) throw(RTI::InteractionClassNotDefined,
-                                                                                RTI::NameNotFound,
-                                                                                RTI::FederateNotExecutionMember,
-                                                                                RTI::ConcurrentAccessAttempted,
-                                                                                RTI::RTIinternalError)
+                                       InteractionClassHandle whichClass) 
 {
     M_Get_Parameter_Handle req, rep;
 
@@ -2469,11 +1918,7 @@ RTI::RTIambassador::getParameterHandle(const char* theName,
 // ----------------------------------------------------------------------------
 // Get Parameter Name
 char* RTI::RTIambassador::getParameterName(ParameterHandle theHandle,
-                                           InteractionClassHandle whichClass) throw(RTI::InteractionClassNotDefined,
-                                                                                    RTI::InteractionParameterNotDefined,
-                                                                                    RTI::FederateNotExecutionMember,
-                                                                                    RTI::ConcurrentAccessAttempted,
-                                                                                    RTI::RTIinternalError)
+                                           InteractionClassHandle whichClass) 
 {
     M_Get_Parameter_Name req, rep;
 
@@ -2487,8 +1932,7 @@ char* RTI::RTIambassador::getParameterName(ParameterHandle theHandle,
 
 // ----------------------------------------------------------------------------
 // Get Object Instance Handle
-RTI::ObjectHandle RTI::RTIambassador::getObjectInstanceHandle(const char* theName) throw(
-    RTI::RTIinternalError, RTI::ConcurrentAccessAttempted, RTI::FederateNotExecutionMember, RTI::ObjectNotKnown)
+RTI::ObjectHandle RTI::RTIambassador::getObjectInstanceHandle(const char* theName) 
 {
     M_Get_Object_Instance_Handle req, rep;
 
@@ -2501,10 +1945,7 @@ RTI::ObjectHandle RTI::RTIambassador::getObjectInstanceHandle(const char* theNam
 
 // ----------------------------------------------------------------------------
 // Get Object Instance Name
-char* RTI::RTIambassador::getObjectInstanceName(ObjectHandle theHandle) throw(RTI::RTIinternalError,
-                                                                              RTI::ConcurrentAccessAttempted,
-                                                                              RTI::FederateNotExecutionMember,
-                                                                              RTI::ObjectNotKnown)
+char* RTI::RTIambassador::getObjectInstanceName(ObjectHandle theHandle) 
 {
     M_Get_Object_Instance_Name req, rep;
 
@@ -2519,10 +1960,7 @@ char* RTI::RTIambassador::getObjectInstanceName(ObjectHandle theHandle) throw(RT
 /** Get routing space handle
     \param rs_name Name of the routing space
  */
-RTI::SpaceHandle RTI::RTIambassador::getRoutingSpaceHandle(const char* rs_name) throw(RTI::NameNotFound,
-                                                                                      RTI::FederateNotExecutionMember,
-                                                                                      RTI::ConcurrentAccessAttempted,
-                                                                                      RTI::RTIinternalError)
+RTI::SpaceHandle RTI::RTIambassador::getRoutingSpaceHandle(const char* rs_name) 
 {
     Debug(D, pdDebug) << "Get routing space handle: " << rs_name << endl;
     M_Get_Space_Handle req, rep;
@@ -2536,10 +1974,7 @@ RTI::SpaceHandle RTI::RTIambassador::getRoutingSpaceHandle(const char* rs_name) 
 /** Get routing space name
     \param handle Handle of the routing space
  */
-char* RTI::RTIambassador::getRoutingSpaceName(SpaceHandle handle) throw(RTI::SpaceNotDefined,
-                                                                        RTI::FederateNotExecutionMember,
-                                                                        RTI::ConcurrentAccessAttempted,
-                                                                        RTI::RTIinternalError)
+char* RTI::RTIambassador::getRoutingSpaceName(SpaceHandle handle) 
 {
     M_Get_Space_Name req, rep;
 
@@ -2554,11 +1989,7 @@ char* RTI::RTIambassador::getRoutingSpaceName(SpaceHandle handle) throw(RTI::Spa
     \param space The dimension's routing SpaceHandle
  */
 RTI::DimensionHandle RTI::RTIambassador::getDimensionHandle(const char* dimension,
-                                                            SpaceHandle space) throw(RTI::SpaceNotDefined,
-                                                                                     RTI::NameNotFound,
-                                                                                     RTI::FederateNotExecutionMember,
-                                                                                     RTI::ConcurrentAccessAttempted,
-                                                                                     RTI::RTIinternalError)
+                                                            SpaceHandle space) 
 {
     M_Get_Dimension_Handle req, rep;
 
@@ -2574,11 +2005,7 @@ RTI::DimensionHandle RTI::RTIambassador::getDimensionHandle(const char* dimensio
     \param space The dimension's routing space handle
  */
 char* RTI::RTIambassador::getDimensionName(DimensionHandle dimension,
-                                           SpaceHandle space) throw(RTI::SpaceNotDefined,
-                                                                    RTI::DimensionNotDefined,
-                                                                    RTI::FederateNotExecutionMember,
-                                                                    RTI::ConcurrentAccessAttempted,
-                                                                    RTI::RTIinternalError)
+                                           SpaceHandle space) 
 {
     M_Get_Dimension_Name req, rep;
 
@@ -2595,11 +2022,7 @@ char* RTI::RTIambassador::getDimensionName(DimensionHandle dimension,
     \return The associated routing space handle
  */
 RTI::SpaceHandle RTI::RTIambassador::getAttributeRoutingSpaceHandle(
-    AttributeHandle attribute, ObjectClassHandle object_class) throw(RTI::ObjectClassNotDefined,
-                                                                     RTI::AttributeNotDefined,
-                                                                     RTI::FederateNotExecutionMember,
-                                                                     RTI::ConcurrentAccessAttempted,
-                                                                     RTI::RTIinternalError)
+    AttributeHandle attribute, ObjectClassHandle object_class) 
 {
     M_Get_Attribute_Space_Handle req, rep;
 
@@ -2611,10 +2034,7 @@ RTI::SpaceHandle RTI::RTIambassador::getAttributeRoutingSpaceHandle(
 
 // ----------------------------------------------------------------------------
 // Get Object Class
-RTI::ObjectClassHandle RTI::RTIambassador::getObjectClass(ObjectHandle theObject) throw(RTI::RTIinternalError,
-                                                                                        RTI::ConcurrentAccessAttempted,
-                                                                                        RTI::FederateNotExecutionMember,
-                                                                                        RTI::ObjectNotKnown)
+RTI::ObjectClassHandle RTI::RTIambassador::getObjectClass(ObjectHandle theObject) 
 {
     M_Get_Object_Class req, rep;
 
@@ -2628,11 +2048,7 @@ RTI::ObjectClassHandle RTI::RTIambassador::getObjectClass(ObjectHandle theObject
     \param inter The interaction handle
     \return The associated routing space
  */
-RTI::SpaceHandle RTI::RTIambassador::getInteractionRoutingSpaceHandle(InteractionClassHandle inter) throw(
-    RTI::InteractionClassNotDefined,
-    RTI::FederateNotExecutionMember,
-    RTI::ConcurrentAccessAttempted,
-    RTI::RTIinternalError)
+RTI::SpaceHandle RTI::RTIambassador::getInteractionRoutingSpaceHandle(InteractionClassHandle inter) 
 {
     M_Get_Interaction_Space_Handle req, rep;
 
@@ -2643,8 +2059,7 @@ RTI::SpaceHandle RTI::RTIambassador::getInteractionRoutingSpaceHandle(Interactio
 
 // ----------------------------------------------------------------------------
 // Get Transportation Handle
-RTI::TransportationHandle RTI::RTIambassador::getTransportationHandle(const char* theName) throw(
-    RTI::RTIinternalError, RTI::ConcurrentAccessAttempted, RTI::FederateNotExecutionMember, RTI::NameNotFound)
+RTI::TransportationHandle RTI::RTIambassador::getTransportationHandle(const char* theName) 
 {
     M_Get_Transportation_Handle req, rep;
 
@@ -2655,10 +2070,7 @@ RTI::TransportationHandle RTI::RTIambassador::getTransportationHandle(const char
 
 // ----------------------------------------------------------------------------
 // Get Transportation Name
-char* RTI::RTIambassador::getTransportationName(TransportationHandle theHandle) throw(RTI::RTIinternalError,
-                                                                                      RTI::ConcurrentAccessAttempted,
-                                                                                      RTI::FederateNotExecutionMember,
-                                                                                      RTI::InvalidTransportationHandle)
+char* RTI::RTIambassador::getTransportationName(TransportationHandle theHandle) 
 {
     M_Get_Transportation_Name req, rep;
 
@@ -2669,10 +2081,7 @@ char* RTI::RTIambassador::getTransportationName(TransportationHandle theHandle) 
 
 // ----------------------------------------------------------------------------
 // Get Ordering Handle
-RTI::OrderingHandle RTI::RTIambassador::getOrderingHandle(const char* theName) throw(RTI::RTIinternalError,
-                                                                                     RTI::ConcurrentAccessAttempted,
-                                                                                     RTI::FederateNotExecutionMember,
-                                                                                     RTI::NameNotFound)
+RTI::OrderingHandle RTI::RTIambassador::getOrderingHandle(const char* theName) 
 {
     M_Get_Ordering_Handle req, rep;
 
@@ -2683,10 +2092,7 @@ RTI::OrderingHandle RTI::RTIambassador::getOrderingHandle(const char* theName) t
 
 // ----------------------------------------------------------------------------
 // Get Ordering Name
-char* RTI::RTIambassador::getOrderingName(OrderingHandle theHandle) throw(RTI::RTIinternalError,
-                                                                          RTI::ConcurrentAccessAttempted,
-                                                                          RTI::FederateNotExecutionMember,
-                                                                          RTI::InvalidOrderingHandle)
+char* RTI::RTIambassador::getOrderingName(OrderingHandle theHandle) 
 {
     M_Get_Ordering_Name req, rep;
 
@@ -2695,87 +2101,55 @@ char* RTI::RTIambassador::getOrderingName(OrderingHandle theHandle) throw(RTI::R
     return hla_strdup(rep.getOrderingName());
 }
 
-void RTI::RTIambassador::enableClassRelevanceAdvisorySwitch() throw(RTI::RTIinternalError,
-                                                                    RTI::RestoreInProgress,
-                                                                    RTI::SaveInProgress,
-                                                                    RTI::ConcurrentAccessAttempted,
-                                                                    RTI::FederateNotExecutionMember)
+void RTI::RTIambassador::enableClassRelevanceAdvisorySwitch() 
 {
     M_Enable_Class_Relevance_Advisory_Switch req, rep;
 
     privateRefs->executeService(&req, &rep);
 }
-void RTI::RTIambassador::disableClassRelevanceAdvisorySwitch() throw(RTI::RTIinternalError,
-                                                                     RTI::RestoreInProgress,
-                                                                     RTI::SaveInProgress,
-                                                                     RTI::ConcurrentAccessAttempted,
-                                                                     RTI::FederateNotExecutionMember)
+void RTI::RTIambassador::disableClassRelevanceAdvisorySwitch() 
 {
     M_Disable_Class_Relevance_Advisory_Switch req, rep;
 
     privateRefs->executeService(&req, &rep);
 }
 
-void RTI::RTIambassador::enableAttributeRelevanceAdvisorySwitch() throw(RTI::RTIinternalError,
-                                                                        RTI::RestoreInProgress,
-                                                                        RTI::SaveInProgress,
-                                                                        RTI::ConcurrentAccessAttempted,
-                                                                        RTI::FederateNotExecutionMember)
+void RTI::RTIambassador::enableAttributeRelevanceAdvisorySwitch() 
 {
     M_Enable_Attribute_Relevance_Advisory_Switch req, rep;
 
     privateRefs->executeService(&req, &rep);
 }
 
-void RTI::RTIambassador::disableAttributeRelevanceAdvisorySwitch() throw(RTI::RTIinternalError,
-                                                                         RTI::RestoreInProgress,
-                                                                         RTI::SaveInProgress,
-                                                                         RTI::ConcurrentAccessAttempted,
-                                                                         RTI::FederateNotExecutionMember)
+void RTI::RTIambassador::disableAttributeRelevanceAdvisorySwitch() 
 {
     M_Disable_Attribute_Relevance_Advisory_Switch req, rep;
 
     privateRefs->executeService(&req, &rep);
 }
 
-void RTI::RTIambassador::enableAttributeScopeAdvisorySwitch() throw(RTI::RTIinternalError,
-                                                                    RTI::RestoreInProgress,
-                                                                    RTI::SaveInProgress,
-                                                                    RTI::ConcurrentAccessAttempted,
-                                                                    RTI::FederateNotExecutionMember)
+void RTI::RTIambassador::enableAttributeScopeAdvisorySwitch() 
 {
     M_Enable_Attribute_Scope_Advisory_Switch req, rep;
 
     privateRefs->executeService(&req, &rep);
 }
 
-void RTI::RTIambassador::disableAttributeScopeAdvisorySwitch() throw(RTI::RTIinternalError,
-                                                                     RTI::RestoreInProgress,
-                                                                     RTI::SaveInProgress,
-                                                                     RTI::ConcurrentAccessAttempted,
-                                                                     RTI::FederateNotExecutionMember)
+void RTI::RTIambassador::disableAttributeScopeAdvisorySwitch() 
 {
     M_Disable_Attribute_Scope_Advisory_Switch req, rep;
 
     privateRefs->executeService(&req, &rep);
 }
 
-void RTI::RTIambassador::enableInteractionRelevanceAdvisorySwitch() throw(RTI::RTIinternalError,
-                                                                          RTI::RestoreInProgress,
-                                                                          RTI::SaveInProgress,
-                                                                          RTI::ConcurrentAccessAttempted,
-                                                                          RTI::FederateNotExecutionMember)
+void RTI::RTIambassador::enableInteractionRelevanceAdvisorySwitch() 
 {
     M_Enable_Interaction_Relevance_Advisory_Switch req, rep;
 
     privateRefs->executeService(&req, &rep);
 }
 
-void RTI::RTIambassador::disableInteractionRelevanceAdvisorySwitch() throw(RTI::RTIinternalError,
-                                                                           RTI::RestoreInProgress,
-                                                                           RTI::SaveInProgress,
-                                                                           RTI::ConcurrentAccessAttempted,
-                                                                           RTI::FederateNotExecutionMember)
+void RTI::RTIambassador::disableInteractionRelevanceAdvisorySwitch() 
 {
     M_Disable_Interaction_Relevance_Advisory_Switch req, rep;
 
