@@ -4,6 +4,7 @@
 #include <functional>
 #include <map>
 #include <vector>
+#include <string>
 
 class cli {
 public:
